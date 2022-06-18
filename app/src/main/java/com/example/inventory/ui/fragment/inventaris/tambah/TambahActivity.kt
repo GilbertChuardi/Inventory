@@ -1,7 +1,6 @@
-package com.example.inventory.ui.tambah
+package com.example.inventory.ui.fragment.inventaris.tambah
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,11 +20,13 @@ class TambahActivity : AppCompatActivity(), View.OnClickListener {
 
         db = FirebaseFirestore.getInstance()
         binding.btnSubmit.setOnClickListener(this)
+        binding.btnBackTambah.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
         when (v.id) {
             R.id.btn_submit -> createProject()
+            R.id.btn_back_tambah -> finish()
         }
     }
 
@@ -55,18 +56,28 @@ class TambahActivity : AppCompatActivity(), View.OnClickListener {
                 "id" to id
             )
 
-
             db.collection("Inventaris")
                 .document(id)
                 .set(data)
                 .addOnSuccessListener {
-                    Log.d("Tambah sukses", "DocumentSnapshot successfully written!")
+                    Toast.makeText(this, "Data Added", Toast.LENGTH_SHORT).show()
                     finish()
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error adding document", Toast.LENGTH_SHORT).show()
-                    Log.w("tambah gagal", "Error adding document", e)
+                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
                 }
+        } else if (binding.etNamaBarang.text?.trim()?.isEmpty() == true) {
+            binding.etNamaBarang.error = "Masukkan nama barang"
+        } else if (binding.etKodeBarang.text?.trim()?.isEmpty() == true) {
+            binding.etKodeBarang.error = "Masukkan kode barang"
+        } else if (binding.etMerekBarang.text?.trim()?.isEmpty() == true) {
+            binding.etMerekBarang.error = "Masukkan merek barang"
+        } else if (binding.etNamaSupplier.text?.trim()?.isEmpty() == true) {
+            binding.etNamaSupplier.error = "Masukkan nama supplier"
+        } else if (binding.etHargaBarang.text?.trim()?.isEmpty() == true) {
+            binding.etHargaBarang.error = "Masukkan harga barang"
+        } else if (binding.etJumlahBarang.text?.trim()?.isEmpty() == true) {
+            binding.etJumlahBarang.error = "Masukkan jumlah barang"
         }
 
     }

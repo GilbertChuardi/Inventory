@@ -39,34 +39,37 @@ class Masuk : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.btn_masuk -> {
-                binding.tvSalah.visibility = View.INVISIBLE
-                if (binding.etPassword.text.toString().isEmpty()) {
-                    binding.tvSalah.text = "Password tidak ada!"
-                    binding.tvSalah.visibility = View.VISIBLE
-                } else if (binding.etPassword.text.toString().isNotEmpty()) {
-                    binding.pbLoading.visibility = View.VISIBLE
-                    val pass = db.collection("admin").document("admin")
-                    pass.get()
-                        .addOnCompleteListener {
-                            if (it.isSuccessful) {
-                                val data = it.result.data
-                                data?.let {
-                                    for ((_, value) in data) {
-                                        val password = value as String
-                                        if (binding.etPassword.text.toString() != password) {
-                                            binding.tvSalah.text = "Password salah!"
-                                            binding.tvSalah.visibility = View.VISIBLE
-                                        } else {
-                                            startActivity(Intent(this, MainActivity::class.java))
-                                        }
-                                        binding.pbLoading.visibility = View.INVISIBLE
-                                    }
+            R.id.btn_masuk -> login()
+        }
+    }
+
+    private fun login(){
+        binding.tvSalah.visibility = View.INVISIBLE
+        if (binding.etPassword.text.toString().isEmpty()) {
+            binding.tvSalah.text = "Password tidak ada!"
+            binding.tvSalah.visibility = View.VISIBLE
+        } else if (binding.etPassword.text.toString().isNotEmpty()) {
+            binding.pbLoading.visibility = View.VISIBLE
+            val pass = db.collection("admin").document("admin")
+            pass.get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val data = it.result.data
+                        data?.let {
+                            for ((_, value) in data) {
+                                val password = value as String
+                                if (binding.etPassword.text.toString() != password) {
+                                    binding.tvSalah.text = "Password salah!"
+                                    binding.tvSalah.visibility = View.VISIBLE
+                                } else {
+                                    startActivity(Intent(this, MainActivity::class.java))
+                                    finish()
                                 }
+                                binding.pbLoading.visibility = View.INVISIBLE
                             }
                         }
+                    }
                 }
-            }
         }
     }
 }

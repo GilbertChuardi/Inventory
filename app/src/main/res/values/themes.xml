@@ -14,4 +14,13 @@
         <!-- Customize your theme here. -->
         <item name="android:typeface">serif</item>
     </style>
+
+    <style name="Theme.Inventory.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Inventory.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Inventory.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

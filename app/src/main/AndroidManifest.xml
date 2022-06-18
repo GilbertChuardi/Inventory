@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Inventory">
         <activity
-            android:name=".ui.tambah.TambahActivity"
+            android:name=".ui.fragment.inventaris.tambah.TambahActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.detail.DetailActivity"
+            android:name=".ui.fragment.inventaris.detail.DetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.masuk.Masuk"

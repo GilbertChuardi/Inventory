@@ -14,8 +14,8 @@ import com.example.inventory.CustomOnItemClickListener
 import com.example.inventory.DataModel
 import com.example.inventory.R
 import com.example.inventory.databinding.FragmentInventarisBinding
-import com.example.inventory.ui.detail.DetailActivity
-import com.example.inventory.ui.tambah.TambahActivity
+import com.example.inventory.ui.fragment.inventaris.detail.DetailActivity
+import com.example.inventory.ui.fragment.inventaris.tambah.TambahActivity
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore

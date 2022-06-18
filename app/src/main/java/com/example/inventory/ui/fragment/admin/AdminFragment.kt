@@ -1,7 +1,10 @@
 package com.example.inventory.ui.fragment.admin
 
 import android.content.ContentValues.TAG
+import android.graphics.Paint
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +25,6 @@ class AdminFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        val db = Firebase.firestore
 
         _binding = FragmentAdminBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -30,20 +32,13 @@ class AdminFragment : Fragment() {
         val textView: TextView = binding.tvAdmin
         textView.text = "Admin"
 
-        val docRef1 = db.collection("Inventaris").document("DUPA0001")
-        docRef1.get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    Log.d(TAG, "DocumentSnapshot data: ${document.data}")
-                } else {
-                    Log.d(TAG, "No such document")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
-            }
+        val mSpannableString = SpannableString(binding.tvGantiPassword.text)
+        mSpannableString.setSpan(UnderlineSpan(), 0, mSpannableString.length, 0)
+        binding.tvGantiPassword.text = mSpannableString
 
-
+        val mSpannableString1 = SpannableString(binding.tvLogout.text)
+        mSpannableString1.setSpan(UnderlineSpan(), 0, mSpannableString1.length, 0)
+        binding.tvLogout.text = mSpannableString1
 
         return root
     }
