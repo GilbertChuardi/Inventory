@@ -18,6 +18,8 @@ class TambahActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityTambahBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.hide()
+
         db = FirebaseFirestore.getInstance()
         binding.btnSubmit.setOnClickListener(this)
         binding.btnBackTambah.setOnClickListener(this)
@@ -63,7 +65,7 @@ class TambahActivity : AppCompatActivity(), View.OnClickListener {
                     Toast.makeText(this, "Data Added", Toast.LENGTH_SHORT).show()
                     finish()
                 }
-                .addOnFailureListener { e ->
+                .addOnFailureListener {
                     Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
                 }
         } else if (binding.etNamaBarang.text?.trim()?.isEmpty() == true) {

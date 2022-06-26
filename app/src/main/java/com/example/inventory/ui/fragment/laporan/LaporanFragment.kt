@@ -24,10 +24,10 @@ class LaporanFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    var tabLayout: TabLayout? = null
-    var frameLayout: FrameLayout? = null
+    private var tabLayout: TabLayout? = null
+    private var frameLayout: FrameLayout? = null
     var fragment: Fragment? = null
-    var fragmentManager1: FragmentManager? = null
+    private var fragmentManager1: FragmentManager? = null
     var fragmentTransaction: FragmentTransaction? = null
 
     override fun onCreateView(
@@ -50,27 +50,25 @@ class LaporanFragment : Fragment() {
         tabLayout = binding.tabLayout
         frameLayout = binding.frameLayout
 
-        fragment = TabFragmentDaftar()
+        fragment = TabFragmentHasil()
         fragmentManager1 = childFragmentManager
         fragmentTransaction = requireFragmentManager().beginTransaction()
-        fragmentTransaction!!.replace(R.id.frame_layout, fragment as TabFragmentDaftar)
+        fragmentTransaction!!.replace(R.id.frame_layout, fragment as TabFragmentHasil)
         fragmentTransaction!!.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         fragmentTransaction!!.commit()
 
         tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                // creating cases for fragment
                 when (tab.position) {
-                    0 -> fragment = TabFragmentDaftar()
-                    1 -> fragment = TabFragmentHasil()
-                    2 -> fragment = TabFragmentRiwayat()
+                    0 -> fragment = TabFragmentHasil()
+                    1 -> fragment = TabFragmentRiwayat()
+                    2 -> fragment = TabFragmentDaftar()
 
                 }
-                val fm = childFragmentManager
-                val ft = fm.beginTransaction()
-                ft.replace(R.id.frame_layout, fragment!!)
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                ft.commit()
+                fragmentTransaction = requireFragmentManager().beginTransaction()
+                fragmentTransaction!!.replace(R.id.frame_layout, fragment!!)
+                fragmentTransaction!!.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                fragmentTransaction!!.commit()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {

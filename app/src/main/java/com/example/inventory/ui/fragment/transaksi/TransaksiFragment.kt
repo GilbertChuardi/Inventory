@@ -19,7 +19,6 @@ import com.example.inventory.databinding.ItemDataTransaksiBinding
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.extensions.LayoutContainer
 
 class TransaksiFragment : Fragment(), View.OnClickListener {
 

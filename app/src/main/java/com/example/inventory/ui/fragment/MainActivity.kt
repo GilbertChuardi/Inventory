@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         val typefaceUtil = TypeFaceUtil()
         typefaceUtil.overridefonts(this, "SERIF", "font/interbold.ttf")
 
-
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)

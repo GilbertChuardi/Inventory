@@ -35,6 +35,7 @@
         android:layout_marginBottom="16dp"
         android:text="Password Salah!"
         android:textColor="#FF3B30"
+        android:textSize="18sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@id/input_field_layout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +58,8 @@
             android:layout_height="wrap_content"
             android:hint="Password"
             android:importantForAutofill="no"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textSize="18sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
