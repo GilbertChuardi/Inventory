@@ -24,6 +24,7 @@
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/drawable/ic_periode.xml" value="0.159" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/drawable/ic_search.xml" value="0.1465" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/drawable/ic_tambah_barang.xml" value="0.1525" />
+        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/activity_bayar.xml" value="0.25" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/activity_detail.xml" value="0.21" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/activity_masuk.xml" value="0.33" />
@@ -42,6 +43,7 @@
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/fragment_tab_riwayat.xml" value="0.1634963768115942" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/fragment_transaksi.xml" value="0.4111111111111111" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/item_data.xml" value="0.33" />
+        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/item_data_bayar.xml" value="0.33" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/item_data_inventaris.xml" value="0.5" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/item_data_transaksi.xml" value="0.33" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/menu/bottom_nav_menu.xml" value="0.18" />

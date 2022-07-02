@@ -22,22 +22,22 @@
 
     <TextView
         android:id="@+id/tv_ganti_password"
-        android:layout_marginTop="64dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="18sp"
+        android:layout_marginTop="64dp"
+        android:text="Ganti Password"
         android:textColor="#007AFF"
-        android:text="Ganti Password"/>
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_logout"
-        android:layout_marginTop="32dp"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:text="Log Out"
         android:textColor="#FF3B30"
-        android:textSize="18sp"
-        android:text="Log Out"/>
+        android:textSize="18sp" />
 
 </LinearLayout>

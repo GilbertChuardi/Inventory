@@ -6,9 +6,9 @@
     tools:context=".ui.fragment.laporan.view.TabFragmentDaftar">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="8dp"
         android:id="@+id/recycler_view_daftar"
         android:layout_width="match_parent"
-        tools:listitem="@layout/item_data_inventaris"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        tools:listitem="@layout/item_data_inventaris" />
 </FrameLayout>

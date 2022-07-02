@@ -99,7 +99,8 @@ class InventarisFragment : Fragment(), View.OnClickListener {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
             val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_data_inventaris, parent, false)
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_data_inventaris, parent, false)
             return ProductViewHolder(view)
         }
     }

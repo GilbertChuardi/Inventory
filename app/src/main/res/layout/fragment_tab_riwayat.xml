@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textSize="20sp"
-        android:text="Riwayat" />
+        android:text="Riwayat"
+        android:textSize="20sp" />
 
 </FrameLayout>
