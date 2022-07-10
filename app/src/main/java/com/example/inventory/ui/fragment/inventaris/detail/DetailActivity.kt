@@ -1,7 +1,10 @@
 package com.example.inventory.ui.fragment.inventaris.detail
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.inventory.DataModel
 import com.example.inventory.R
@@ -44,12 +47,11 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         when (v.id) {
             R.id.btn_submit_detail -> updateItem()
             R.id.btn_back_detail -> finish()
-            R.id.btn_hapus_detail -> deleteItem()
+            R.id.btn_hapus_detail -> onAlertDialog()
         }
     }
 
     private fun updateItem() {
-
         if (binding.etNamaBarangDetail.text?.trim()?.isNotEmpty() == true &&
             binding.etKodeBarangDetail.text?.trim()?.isNotEmpty() == true &&
             binding.etMerekBarangDetail.text?.trim()?.isNotEmpty() == true &&
@@ -95,4 +97,19 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         finish()
     }
 
+    private fun onAlertDialog() {
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle("Hapus Data")
+        builder.setMessage("Data yang terhapus tidak dapat dikembalikan lagi!")
+
+        builder.setPositiveButton(
+            "Hapus") { _, _ ->
+            deleteItem()
+        }
+        builder.setNegativeButton(
+            "Batal") { _, _ ->
+        }
+        builder.show()
+    }
 }

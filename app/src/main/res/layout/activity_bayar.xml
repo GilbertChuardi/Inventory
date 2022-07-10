@@ -33,9 +33,82 @@
         android:id="@+id/recycler_view_bayar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_total_harga"
         app:layout_constraintTop_toBottomOf="@id/btn_back_bayar"
         tools:listitem="@layout/item_data_bayar" />
 
-    
+    <TextView
+        android:id="@+id/tv_total_harga"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:gravity="center"
+        android:text="Total Harga: "
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/ll_btn_green" />
+
+    <LinearLayout
+        android:id="@+id/ll_btn_green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@id/ll_btn_red">
+
+        <Button
+            android:id="@+id/btn_lunas_bayar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="#34C759"
+            android:text="Lunas"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_input_manual_bayar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:backgroundTint="#34C759"
+            android:text="Input Manual"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_btn_red"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btn_belum_lunas_bayar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FF3B30"
+            android:text="Belum Lunas"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_hapus_semua_bayar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FF3B30"
+            android:text="Hapus Semua"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

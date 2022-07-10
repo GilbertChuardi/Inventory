@@ -53,7 +53,6 @@ class LaporanFragment : Fragment() {
         fragmentManager1 = childFragmentManager
         fragmentTransaction = requireFragmentManager().beginTransaction()
         fragmentTransaction!!.replace(R.id.frame_layout, fragment as TabFragmentHasil)
-        fragmentTransaction!!.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         fragmentTransaction!!.commit()
 
         tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -66,7 +65,6 @@ class LaporanFragment : Fragment() {
                 }
                 fragmentTransaction = requireFragmentManager().beginTransaction()
                 fragmentTransaction!!.replace(R.id.frame_layout, fragment!!)
-                fragmentTransaction!!.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 fragmentTransaction!!.commit()
             }
 

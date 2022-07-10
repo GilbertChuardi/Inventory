@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/drawable/et_border.xml" value="0.115" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/drawable/frame.xml" value="0.1105" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/drawable/frame_blue.xml" value="0.105" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/drawable/frame_green.xml" value="0.101" />
@@ -31,6 +32,7 @@
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/activity_tab_layout.xml" value="0.1634963768115942" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/activity_tambah.xml" value="0.18" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/admin_fragment.xml" value="0.12273550724637682" />
+        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/alertdialog_nama_bayar.xml" value="0.1" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/fragment_admin.xml" value="0.25" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/fragment_dashboard.xml" value="0.18020833333333333" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/fragment_home.xml" value="0.18" />

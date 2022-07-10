@@ -16,8 +16,6 @@ import com.example.inventory.CustomOnItemClickListener
 import com.example.inventory.R
 import com.example.inventory.TransaksiModel
 import com.example.inventory.databinding.FragmentTransaksiBinding
-import com.example.inventory.databinding.ItemDataTransaksiBinding
-import com.example.inventory.ui.fragment.inventaris.detail.DetailActivity
 import com.example.inventory.ui.fragment.transaksi.bayar.BayarActivity
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -52,7 +50,8 @@ class TransaksiFragment : Fragment(), View.OnClickListener {
         val db = FirebaseFirestore.getInstance()
         val query = db.collection("Inventaris")
         val options =
-            FirestoreRecyclerOptions.Builder<TransaksiModel>().setQuery(query, TransaksiModel::class.java)
+            FirestoreRecyclerOptions.Builder<TransaksiModel>()
+                .setQuery(query, TransaksiModel::class.java)
                 .build()
         adapter = ProductFirestoreRecyclerAdapter(options)
         binding.recyclerViewTransaksi.adapter = adapter
@@ -78,23 +77,27 @@ class TransaksiFragment : Fragment(), View.OnClickListener {
     private inner class ProductFirestoreRecyclerAdapter(options: FirestoreRecyclerOptions<TransaksiModel>) :
         FirestoreRecyclerAdapter<TransaksiModel, ProductViewHolder>(options) {
         var checkedItem = ArrayList<String>()
-        override fun onBindViewHolder(holder: ProductViewHolder, position: Int, model: TransaksiModel) {
+        override fun onBindViewHolder(
+            holder: ProductViewHolder,
+            position: Int,
+            model: TransaksiModel
+        ) {
             val tvNamaBarang: TextView = holder.itemView.findViewById(R.id.tv_nama_barang_transaksi)
             val tvHargaBarang: TextView =
                 holder.itemView.findViewById(R.id.tv_harga_barang_transaksi)
             val tvJumlahBarang: TextView =
                 holder.itemView.findViewById(R.id.tv_jumlah_barang_transaksi)
-            val checkBox:CheckBox = holder.itemView.findViewById(R.id.cb_transaksi)
+            val checkBox: CheckBox = holder.itemView.findViewById(R.id.cb_transaksi)
 
             tvNamaBarang.text = model.nama_barang
-            tvHargaBarang.text = model.kode_barang
-            tvJumlahBarang.text = model.jumlah_barang.toString()
+            tvHargaBarang.text = "Rp. " + model.harga_barang.toString()
+            tvJumlahBarang.text = "Stok: " + model.jumlah_barang.toString()
 
-            if(checkedItem.size != 0){
+            if (checkedItem.size != 0) {
                 var i = 0
                 var flag = false
-                while(i<checkedItem.size){
-                    if(checkedItem[i] == model.id){
+                while (i < checkedItem.size) {
+                    if (checkedItem[i] == model.id) {
                         Log.d("transaksi", "transaksi is true" + model.id)
                         checkBox.isChecked = true
                         flag = true
@@ -102,7 +105,7 @@ class TransaksiFragment : Fragment(), View.OnClickListener {
                     }
                     i++
                 }
-                if(!flag){
+                if (!flag) {
                     checkBox.isChecked = false
                 }
             }
@@ -138,31 +141,26 @@ class TransaksiFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.btn_bayar -> {
-                sb = StringBuilder()
-
-                var i = 0
-                while (i < adapter.checkedItem.size) {
-                    val spiritualTeacher = adapter.checkedItem[i]
-                    sb!!.append(spiritualTeacher)
-                    if (i != adapter.checkedItem.size - 1) {
-                        sb!!.append("\n")
-                    }
-                    i++
-                }
-
-                if (adapter.checkedItem.size > 0) {
-                    Toast.makeText(context, sb!!.toString(), Toast.LENGTH_SHORT).show()
+                if (adapter.checkedItem.size in 1..10) {
                     val intent = Intent(activity, BayarActivity::class.java)
-                    intent.putStringArrayListExtra(BayarActivity.EXTRA_DATA_BAYAR, adapter.checkedItem)
+                    intent.putStringArrayListExtra(
+                        BayarActivity.EXTRA_DATA_BAYAR,
+                        adapter.checkedItem
+                    )
                     startActivity(intent)
+                } else if (adapter.checkedItem.size > 10) {
+                    Toast.makeText(
+                        context,
+                        "Tidak bisa membeli lebih dari 10 item",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
-                    Toast.makeText(context, "Please Check An Item First", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Tidak ada barang yang di ceklist", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
     }
-
-
 
 
 }

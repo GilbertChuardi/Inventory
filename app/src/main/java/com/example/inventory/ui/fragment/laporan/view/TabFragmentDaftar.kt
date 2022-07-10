@@ -74,7 +74,7 @@ class TabFragmentDaftar : Fragment() {
             val tvTotal: TextView = holder.itemView.findViewById(R.id.tv_jumlah_barang)
             tvNama.text = model.nama_pembeli
             tvTanggal.text = model.kode_transaksi.subSequence(0, 10)
-            tvTotal.text = model.total_harga_transaksi.toString()
+            tvTotal.text = "Rp. " + model.total_harga_transaksi.toString()
             Log.d("TabFrag", model.nama_pembeli)
         }
 
