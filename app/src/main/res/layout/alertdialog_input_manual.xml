@@ -5,10 +5,20 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/et_nama_pembeli_bayar"
+        android:hint="Nama pembeli"
+        android:id="@+id/et_input_manual_nama_bayar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp" />
+
+    <EditText
+        android:hint="Jumlah harga"
+        android:id="@+id/et_input_manual_harga_bayar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:inputType="number" />
 
 </LinearLayout>

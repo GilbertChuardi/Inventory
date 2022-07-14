@@ -27,12 +27,17 @@
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/drawable/ic_tambah_barang.xml" value="0.1525" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/activity_bayar.xml" value="0.25" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/activity_detail.xml" value="0.21" />
+        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/activity_detail_daftar.xml" value="0.33" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/activity_masuk.xml" value="0.33" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/activity_tab_layout.xml" value="0.1634963768115942" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/activity_tambah.xml" value="0.18" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/admin_fragment.xml" value="0.12273550724637682" />
-        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/alertdialog_nama_bayar.xml" value="0.1" />
+        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/alertdialog_detail_riwayat.xml" value="0.25" />
+        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/alertdialog_ganti_password.xml" value="0.13677536231884058" />
+        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/alertdialog_input_manual.xml" value="0.1" />
+        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/alertdialog_nama_bayar.xml" value="0.18" />
+        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/alertdialog_namaketerangan_bayar.xml" value="0.15489130434782608" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/fragment_admin.xml" value="0.25" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/fragment_dashboard.xml" value="0.18020833333333333" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/fragment_home.xml" value="0.18" />
@@ -42,11 +47,12 @@
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/fragment_tab_daftar.xml" value="0.1634963768115942" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/fragment_tab_hasil.xml" value="0.1634963768115942" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/fragment_tab_layout.xml" value="0.1634963768115942" />
-        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/fragment_tab_riwayat.xml" value="0.1634963768115942" />
+        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/fragment_tab_riwayat.xml" value="0.25" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/fragment_transaksi.xml" value="0.4111111111111111" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/item_data.xml" value="0.33" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/item_data_bayar.xml" value="0.33" />
-        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/item_data_inventaris.xml" value="0.5" />
+        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/item_data_inventaris.xml" value="0.4906716417910448" />
+        <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/item_data_riwayat.xml" value="0.5" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/layout/item_data_transaksi.xml" value="0.33" />
         <entry key="..\:/Users/Vincent Chuardi/GilbertC/MobileDasar/Inventory/app/src/main/res/menu/bottom_nav_menu.xml" value="0.18" />
       </map>

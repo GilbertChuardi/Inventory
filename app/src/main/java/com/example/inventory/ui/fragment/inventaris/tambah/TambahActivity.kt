@@ -33,28 +33,28 @@ class TambahActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun createProject() {
-        val nama_barang = binding.etNamaBarang.text.toString().trim()
-        val kode_barang = binding.etKodeBarang.text.toString().trim()
-        val merek_barang = binding.etMerekBarang.text.toString().trim()
-        val nama_supplier = binding.etNamaSupplier.text.toString().trim()
-        val harga_barang = binding.etHargaBarang.text.toString().trim()
-        val jumlah_barang = binding.etJumlahBarang.text.toString().trim()
+        val namaBarang = binding.etNamaBarang.text.toString().trim()
+        val kodeBarang = binding.etKodeBarang.text.toString().trim()
+        val merekBarang = binding.etMerekBarang.text.toString().trim()
+        val namaSupplier = binding.etNamaSupplier.text.toString().trim()
+        val hargaBarang = binding.etHargaBarang.text.toString().trim()
+        val jumlahBarang = binding.etJumlahBarang.text.toString().trim()
         val id = db.collection("Inventaris").document().id
 
-        if (nama_barang.isNotEmpty() &&
-            kode_barang.isNotEmpty() &&
-            merek_barang.isNotEmpty() &&
-            nama_supplier.isNotEmpty() &&
-            harga_barang.isNotEmpty() &&
-            jumlah_barang.isNotEmpty()
+        if (namaBarang.isNotEmpty() &&
+            kodeBarang.isNotEmpty() &&
+            merekBarang.isNotEmpty() &&
+            namaSupplier.isNotEmpty() &&
+            hargaBarang.isNotEmpty() &&
+            jumlahBarang.isNotEmpty()
         ) {
             val data = hashMapOf(
-                "nama_barang" to nama_barang,
-                "kode_barang" to kode_barang,
-                "merek_barang" to merek_barang,
-                "nama_supplier" to nama_supplier,
-                "harga_barang" to harga_barang.toInt(),
-                "jumlah_barang" to jumlah_barang.toInt(),
+                "nama_barang" to namaBarang,
+                "kode_barang" to kodeBarang,
+                "merek_barang" to merekBarang,
+                "nama_supplier" to namaSupplier,
+                "harga_barang" to hargaBarang.toInt(),
+                "jumlah_barang" to jumlahBarang.toInt(),
                 "id" to id
             )
 
@@ -65,9 +65,7 @@ class TambahActivity : AppCompatActivity(), View.OnClickListener {
                     Toast.makeText(this, "Data Added", Toast.LENGTH_SHORT).show()
                     finish()
                 }
-                .addOnFailureListener {
-                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-                }
+
         } else if (binding.etNamaBarang.text?.trim()?.isEmpty() == true) {
             binding.etNamaBarang.error = "Masukkan nama barang"
         } else if (binding.etKodeBarang.text?.trim()?.isEmpty() == true) {

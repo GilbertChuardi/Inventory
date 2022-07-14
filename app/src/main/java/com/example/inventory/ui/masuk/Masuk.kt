@@ -5,7 +5,6 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.inventory.R
 import com.example.inventory.databinding.ActivityMasukBinding
@@ -17,7 +16,6 @@ import com.google.firebase.ktx.Firebase
 class Masuk : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityMasukBinding
-    private lateinit var button: Button
     private var db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,8 +32,7 @@ class Masuk : AppCompatActivity(), View.OnClickListener {
         binding.etPassword.typeface = myFont
         binding.btnMasuk.typeface = myFont
 
-        button = binding.btnMasuk
-        button.setOnClickListener(this)
+        binding.btnMasuk.setOnClickListener(this)
 
         binding.etPassword.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
@@ -80,5 +77,10 @@ class Masuk : AppCompatActivity(), View.OnClickListener {
                     }
                 }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finishAffinity()
     }
 }

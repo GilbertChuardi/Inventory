@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.inventory.CustomOnItemClickListener
-import com.example.inventory.DataModel
 import com.example.inventory.R
 import com.example.inventory.databinding.FragmentInventarisBinding
+import com.example.inventory.model.DataModel
 import com.example.inventory.ui.fragment.inventaris.detail.DetailActivity
 import com.example.inventory.ui.fragment.inventaris.tambah.TambahActivity
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -31,20 +31,15 @@ class InventarisFragment : Fragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentInventarisBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.tvInventaris
-        textView.text = "Inventaris"
-
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnTambah.setOnClickListener(this)
+        val textView: TextView = binding.tvInventaris
+        textView.text = "Inventaris"
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         val db = FirebaseFirestore.getInstance()
@@ -54,23 +49,8 @@ class InventarisFragment : Fragment(), View.OnClickListener {
                 .build()
         adapter = ProductFirestoreRecyclerAdapter(options)
         binding.recyclerView.adapter = adapter
-    }
 
-    override fun onStart() {
-        super.onStart()
-        adapter!!.startListening()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (adapter != null) {
-            adapter!!.stopListening()
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        binding.btnTambah.setOnClickListener(this)
     }
 
     private inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view)
@@ -113,5 +93,20 @@ class InventarisFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        adapter!!.startListening()
+    }
 
+    override fun onStop() {
+        super.onStop()
+        if (adapter != null) {
+            adapter!!.stopListening()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

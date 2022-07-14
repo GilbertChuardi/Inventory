@@ -3,12 +3,11 @@ package com.example.inventory.ui.fragment.inventaris.detail
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.inventory.DataModel
 import com.example.inventory.R
 import com.example.inventory.databinding.ActivityDetailBinding
+import com.example.inventory.model.DataModel
 import com.google.firebase.firestore.FirebaseFirestore
 
 class DetailActivity : AppCompatActivity(), View.OnClickListener {
@@ -72,6 +71,9 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                         "id" to dataItem.id
                     )
                 )
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Data Update", Toast.LENGTH_SHORT).show()
+                }
 
             finish()
         } else if (binding.etNamaBarangDetail.text?.trim()?.isEmpty() == true) {
@@ -89,27 +91,25 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun onAlertDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Hapus Data")
+            .setMessage("Data yang terhapus tidak dapat dikembalikan lagi!")
+            .setPositiveButton(
+                "Hapus"
+            ) { _, _ -> deleteItem() }
+            .setNegativeButton("Batal") { _, _ -> }
+            .show()
+    }
+
     private fun deleteItem() {
         db.collection("Inventaris")
             .document(dataItem.id)
             .delete()
+            .addOnSuccessListener {
+                Toast.makeText(this, "Data sudah terhapus", Toast.LENGTH_SHORT).show()
+            }
 
         finish()
-    }
-
-    private fun onAlertDialog() {
-        val builder = AlertDialog.Builder(this)
-
-        builder.setTitle("Hapus Data")
-        builder.setMessage("Data yang terhapus tidak dapat dikembalikan lagi!")
-
-        builder.setPositiveButton(
-            "Hapus") { _, _ ->
-            deleteItem()
-        }
-        builder.setNegativeButton(
-            "Batal") { _, _ ->
-        }
-        builder.show()
     }
 }

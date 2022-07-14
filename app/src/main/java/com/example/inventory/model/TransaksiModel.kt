@@ -1,4 +1,4 @@
-package com.example.inventory
+package com.example.inventory.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -8,10 +8,7 @@ class TransaksiModel(
     val harga_barang: Int = 0,
     val id: String = "",
     val jumlah_barang: Int = 0,
-    val kode_barang: String = "",
-    val merek_barang: String = "",
-    var nama_barang: String = "",
-    var nama_supplier: String = ""
+    var nama_barang: String = ""
 ) : Parcelable {
     var isSelected: Boolean = false
 }

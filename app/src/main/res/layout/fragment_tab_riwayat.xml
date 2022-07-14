@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragment.laporan.view.TabFragmentRiwayat">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Riwayat"
-        android:textSize="20sp" />
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="48dp"
+        tools:listitem="@layout/item_data_inventaris" />
 
-</FrameLayout>
+</LinearLayout>

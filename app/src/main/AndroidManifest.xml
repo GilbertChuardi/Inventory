@@ -10,17 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Inventory">
         <activity
+            android:name=".ui.fragment.laporan.view.daftar.DetailDaftarActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.fragment.transaksi.bayar.BayarActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.fragment.inventaris.tambah.TambahActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.fragment.inventaris.detail.DetailActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.masuk.Masuk"
             android:exported="true"
@@ -34,7 +37,7 @@
         <activity
             android:name=".ui.fragment.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

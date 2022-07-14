@@ -2,7 +2,6 @@ package com.example.inventory.ui.fragment.transaksi
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.inventory.CustomOnItemClickListener
 import com.example.inventory.R
-import com.example.inventory.TransaksiModel
 import com.example.inventory.databinding.FragmentTransaksiBinding
+import com.example.inventory.model.TransaksiModel
 import com.example.inventory.ui.fragment.transaksi.bayar.BayarActivity
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -26,25 +25,20 @@ class TransaksiFragment : Fragment(), View.OnClickListener {
     private var _binding: FragmentTransaksiBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: ProductFirestoreRecyclerAdapter
-    private var sb: StringBuilder? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTransaksiBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.tvTransaksi
-        textView.text = "Transaksi"
-
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnBayar.setOnClickListener(this)
+        val textView: TextView = binding.tvTransaksi
+        textView.text = "Transaksi"
 
         binding.recyclerViewTransaksi.layoutManager = LinearLayoutManager(context)
         val db = FirebaseFirestore.getInstance()
@@ -55,21 +49,8 @@ class TransaksiFragment : Fragment(), View.OnClickListener {
                 .build()
         adapter = ProductFirestoreRecyclerAdapter(options)
         binding.recyclerViewTransaksi.adapter = adapter
-    }
 
-    override fun onStart() {
-        super.onStart()
-        adapter.startListening()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        adapter.stopListening()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        binding.btnBayar.setOnClickListener(this)
     }
 
     private inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view)
@@ -98,7 +79,6 @@ class TransaksiFragment : Fragment(), View.OnClickListener {
                 var flag = false
                 while (i < checkedItem.size) {
                     if (checkedItem[i] == model.id) {
-                        Log.d("transaksi", "transaksi is true" + model.id)
                         checkBox.isChecked = true
                         flag = true
                         break
@@ -118,11 +98,9 @@ class TransaksiFragment : Fragment(), View.OnClickListener {
                         if (myCheckBox.isChecked) {
                             model.isSelected = true
                             checkedItem.add(model.id)
-                            Log.d("transaksi", "transaksi add" + model.id)
                         } else if (!myCheckBox.isChecked) {
                             model.isSelected = false
                             checkedItem.remove(model.id)
-                            Log.d("transaksi", "transaksi remove " + model.id)
                         }
                     }
                 }
@@ -141,26 +119,47 @@ class TransaksiFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.btn_bayar -> {
-                if (adapter.checkedItem.size in 1..10) {
-                    val intent = Intent(activity, BayarActivity::class.java)
-                    intent.putStringArrayListExtra(
-                        BayarActivity.EXTRA_DATA_BAYAR,
-                        adapter.checkedItem
-                    )
-                    startActivity(intent)
-                } else if (adapter.checkedItem.size > 10) {
-                    Toast.makeText(
-                        context,
-                        "Tidak bisa membeli lebih dari 10 item",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    Toast.makeText(context, "Tidak ada barang yang di ceklist", Toast.LENGTH_SHORT)
-                        .show()
+                when {
+                    adapter.checkedItem.size in 1..10 -> {
+                        val intent = Intent(activity, BayarActivity::class.java)
+                        intent.putStringArrayListExtra(
+                            BayarActivity.EXTRA_DATA_BAYAR,
+                            adapter.checkedItem
+                        )
+                        startActivity(intent)
+                    }
+                    adapter.checkedItem.size > 10 -> {
+                        Toast.makeText(
+                            context,
+                            "Tidak bisa membeli lebih dari 10 item",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    else -> {
+                        Toast.makeText(
+                            context,
+                            "Tidak ada barang yang di ceklist",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
                 }
             }
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        adapter.startListening()
+    }
 
+    override fun onStop() {
+        super.onStop()
+        adapter.stopListening()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

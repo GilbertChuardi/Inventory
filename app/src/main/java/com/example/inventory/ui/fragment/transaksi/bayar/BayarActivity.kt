@@ -1,6 +1,7 @@
 package com.example.inventory.ui.fragment.transaksi.bayar
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
@@ -18,17 +19,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.inventory.CustomOnItemClickListener
-import com.example.inventory.DataModel
 import com.example.inventory.R
 import com.example.inventory.databinding.ActivityBayarBinding
+import com.example.inventory.model.DataModel
+import com.example.inventory.ui.fragment.MainActivity
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.Timestamp
 import com.google.firebase.Timestamp.now
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.item_data_bayar.view.*
 import java.text.NumberFormat
-
 
 class BayarActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -61,7 +63,11 @@ class BayarActivity : AppCompatActivity(), View.OnClickListener {
         binding.recyclerViewBayar.adapter = adapter
 
         numberFormat1.maximumFractionDigits = 0
+        binding.btnBackBayar.setOnClickListener(this)
         binding.btnLunasBayar.setOnClickListener(this)
+        binding.btnBelumLunasBayar.setOnClickListener(this)
+        binding.btnInputManualBayar.setOnClickListener(this)
+        binding.btnHapusSemuaBayar.setOnClickListener(this)
     }
 
     private inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view)
@@ -116,85 +122,152 @@ class BayarActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.btn_lunas_bayar -> inputNama()
+            R.id.btn_back_bayar -> finish()
+            R.id.btn_lunas_bayar -> inputData("Lunas")
+            R.id.btn_belum_lunas_bayar -> inputData("Piutang")
+            R.id.btn_hapus_semua_bayar -> deleteFromBayar()
+            R.id.btn_input_manual_bayar -> inputManual()
         }
     }
 
-    private fun inputNama(){
-        val builder = AlertDialog.Builder(this)
-        val inflater = layoutInflater
-        builder.setTitle("With EditText")
-        val dialogLayout = inflater.inflate(R.layout.alertdialog_nama_bayar, null)
-        val editText1  = dialogLayout.findViewById<EditText>(R.id.et_nama_pembeli_bayar)
-        builder.setView(dialogLayout)
-        builder.setPositiveButton("OK") { _, _ -> lunasBayar(editText1.text.toString()) }
-        builder.show()
+    private fun inputManual() {
+        if (trimmingarray()) {
+            val inflater = layoutInflater
+            val dialogLayout = inflater.inflate(R.layout.alertdialog_input_manual, null)
+            val editText1 = dialogLayout.findViewById<EditText>(R.id.et_input_manual_nama_bayar)
+            val editText2 = dialogLayout.findViewById<EditText>(R.id.et_input_manual_harga_bayar)
+            val builder = AlertDialog.Builder(this)
+                .setTitle("Total Harga")
+                .setView(dialogLayout)
+                .setPositiveButton("OK", null)
+                .show()
+
+            val mPositiveButton = builder.getButton(AlertDialog.BUTTON_POSITIVE)
+            mPositiveButton.setOnClickListener {
+                if (editText1.text.toString().isNotEmpty() && editText2.text.toString()
+                        .isNotEmpty() && editText2.text.toString().toInt() > 0
+                ) {
+                    totalHarga = editText2.text.toString().toInt()
+                    lunasBayar(editText1.text.toString())
+                    builder.dismiss()
+                } else {
+                    Toast.makeText(this, "Data tidak valid", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
-    private fun lunasBayar(nama:String) {
-        var j = 0
-        while (j < namaBrg.size) {
-            if (namaBrg[j] == "") {
-                val arrList = namaBrg.toMutableList()
-                arrList.removeAt(j)
-                namaBrg = arrList.toTypedArray()
-                j--
-            }
-            j++
-        }
+    private fun inputData(tipe: String) {
+        if (tipe == "Lunas" && trimmingarray()) {
+            val inflater = layoutInflater
+            val dialogLayout = inflater.inflate(R.layout.alertdialog_nama_bayar, null)
+            val editText1 = dialogLayout.findViewById<EditText>(R.id.et_nama_pembeli_bayar)
+            val builder = AlertDialog.Builder(this)
+                .setTitle("Nama Pembeli")
+                .setView(dialogLayout)
+                .setPositiveButton("OK", null)
+                .show()
 
-        var k = jlhBeli.size - 1
-        while (k > namaBrg.size - 1) {
-            val arrList = jlhBeli.toMutableList()
-            arrList.removeAt(k)
-            jlhBeli = arrList.toTypedArray()
-            k--
-        }
-
-        var z = 0
-        var adaNol = false
-        while (z < namaBrg.size) {
-            if (jlhBeli[z] == 0) {
-                adaNol = true
-            }
-            if (jlhBeli[z] > jlhBrg[z]) {
-                Toast.makeText(this, "Tidak bisa melebihi stok", Toast.LENGTH_SHORT).show()
-                return
-            }
-            z++
-        }
-
-        if (!adaNol) {
-            var i = 0
-            while (i < dataItem.size) {
-                db.collection("Inventaris")
-                    .document(dataItem[i])
-                    .update("jumlah_barang", jlhBrg[i] - jlhBeli[i])
-                i++
-            }
-
-            val t = now()
-            val ts = Timestamp(t.seconds, 0)
-
-            val data = hashMapOf(
-                "data_nama_item" to namaBrg.toList(),
-                "data_total_item" to jlhBeli.toList(),
-                "tanggal" to ts,
-                "total_harga" to totalHarga,
-                "nama" to nama
-            )
-            db.collection("riwayat_penjualan")
-                .add(data)
-                .addOnSuccessListener { documentReference ->
-                    Log.d("bayarbayar", "DocumentSnapshot written with ID: ${documentReference.id}")
+            val mPositiveButton = builder.getButton(AlertDialog.BUTTON_POSITIVE)
+            mPositiveButton.setOnClickListener {
+                if (editText1.text.toString().isNotEmpty()) {
+                    lunasBayar(editText1.text.toString())
+                    builder.dismiss()
+                } else {
+                    Toast.makeText(this, "Data tidak boleh kosong", Toast.LENGTH_SHORT).show()
                 }
-                .addOnFailureListener { e ->
-                    Log.w("bayarbayar", "Error adding document", e)
+            }
+        } else if (tipe == "Piutang" && trimmingarray()) {
+            val inflater = layoutInflater
+            val dialogLayout = inflater.inflate(R.layout.alertdialog_namaketerangan_bayar, null)
+            val editText1 =
+                dialogLayout.findViewById<EditText>(R.id.et_nama_pembeli_keterangan_bayar)
+            val editText2 =
+                dialogLayout.findViewById<EditText>(R.id.et_keterangan_pembeli_keterangan_bayar)
+            val builder = AlertDialog.Builder(this)
+                .setTitle("Tulis data")
+                .setView(dialogLayout)
+                .setPositiveButton("OK", null)
+                .show()
+
+            val mPositiveButton = builder.getButton(AlertDialog.BUTTON_POSITIVE)
+            mPositiveButton.setOnClickListener {
+                if (editText1.text.toString().isNotEmpty() && editText2.text.toString()
+                        .isNotEmpty()
+                ) {
+                    belumLunasBayar(editText1.text.toString(), editText2.text.toString())
+                    builder.dismiss()
+                } else {
+                    Toast.makeText(this, "Data tidak boleh kosong", Toast.LENGTH_SHORT).show()
                 }
-            finish()
-        } else {
-            Toast.makeText(this, "Tidak boleh ada 0", Toast.LENGTH_SHORT).show()
+            }
         }
+    }
+
+    private fun lunasBayar(nama: String) {
+        var i = 0
+        val t = now()
+        val ts = Timestamp(t.seconds, 0)
+
+        while (i < dataItem.size) {
+            db.collection("Inventaris")
+                .document(dataItem[i])
+                .update("jumlah_barang", jlhBrg[i] - jlhBeli[i])
+            i++
+        }
+
+        db.collection("omset").document("omset")
+            .update("omset", FieldValue.increment(totalHarga.toLong()))
+
+        val data = hashMapOf(
+            "data_nama_item" to namaBrg.toList(),
+            "data_total_item" to jlhBeli.toList(),
+            "tanggal" to ts,
+            "total_harga" to totalHarga,
+            "nama" to nama
+        )
+        db.collection("riwayat_penjualan")
+            .add(data)
+            .addOnSuccessListener { documentReference ->
+                Log.d("Bayar Activity", "Data Added dengan ID: ${documentReference.id}")
+            }
+        finish()
+    }
+
+    private fun belumLunasBayar(nama: String, keterangan: String) {
+        var i = 0
+        val t = now()
+        val ts = Timestamp(t.seconds, 0)
+        val id = db.collection("daftar_piutang").document().id
+
+        while (i < dataItem.size) {
+            db.collection("Inventaris")
+                .document(dataItem[i])
+                .update("jumlah_barang", jlhBrg[i] - jlhBeli[i])
+            i++
+        }
+
+        val data = hashMapOf(
+            "data_nama_item" to namaBrg.toList(),
+            "data_total_item" to jlhBeli.toList(),
+            "tanggal" to ts,
+            "total_harga" to totalHarga,
+            "nama" to nama,
+            "keterangan" to keterangan,
+            "id" to id
+        )
+        db.collection("daftar_piutang")
+            .document(id)
+            .set(data)
+            .addOnSuccessListener {
+                Log.d("Bayar Activity", "Data Added")
+            }
+        finish()
+    }
+
+    private fun deleteFromBayar() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finishAffinity()
     }
 
     private inner class Watcher1 : TextWatcher {
@@ -217,7 +290,15 @@ class BayarActivity : AppCompatActivity(), View.OnClickListener {
                 var i = 0
                 while (i < jlhBeli.size) {
                     totalHarga += hargaBrg[i] * jlhBeli[i]
-                    Log.d("bayar", "bayarbayar ${jlhBeli[i]}")
+                    i++
+                }
+                val convert = numberFormat1.format(totalHarga)
+                binding.tvTotalHarga.text = "Total Harga : Rp. " + convert.removeRange(0, 1)
+            } else {
+                jlhBeli[position] = 0
+                var i = 0
+                while (i < jlhBeli.size) {
+                    totalHarga += hargaBrg[i] * jlhBeli[i]
                     i++
                 }
                 val convert = numberFormat1.format(totalHarga)
@@ -229,7 +310,7 @@ class BayarActivity : AppCompatActivity(), View.OnClickListener {
         override fun onTextChanged(s: CharSequence, a: Int, b: Int, c: Int) {}
     }
 
-    inner class MinMaxFilter() : InputFilter {
+    private inner class MinMaxFilter() : InputFilter {
         private var intMin: Int = 0
         private var intMax: Int = 0
 
@@ -260,6 +341,41 @@ class BayarActivity : AppCompatActivity(), View.OnClickListener {
         private fun isInRange(a: Int, b: Int, c: Int): Boolean {
             return if (b > a) c in a..b else c in b..a
         }
+    }
+
+    private fun trimmingarray(): Boolean {
+        var j = 0
+        while (j < namaBrg.size) {
+            if (namaBrg[j] == "") {
+                val arrList = namaBrg.toMutableList()
+                arrList.removeAt(j)
+                namaBrg = arrList.toTypedArray()
+                j--
+            }
+            j++
+        }
+
+        var k = jlhBeli.size - 1
+        while (k > namaBrg.size - 1) {
+            val arrList = jlhBeli.toMutableList()
+            arrList.removeAt(k)
+            jlhBeli = arrList.toTypedArray()
+            k--
+        }
+
+        var z = 0
+        while (z < namaBrg.size) {
+            if (jlhBeli[z] == 0) {
+                Toast.makeText(this, "Tidak boleh ada 0", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            if (jlhBeli[z] > jlhBrg[z]) {
+                Toast.makeText(this, "Tidak bisa melebihi stok", Toast.LENGTH_SHORT).show()
+                return false
+            }
+            z++
+        }
+        return true
     }
 
     override fun onStart() {

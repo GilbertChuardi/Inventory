@@ -1,4 +1,4 @@
-package com.example.inventory
+package com.example.inventory.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

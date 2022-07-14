@@ -12,17 +12,15 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.inventory.R
 import com.example.inventory.databinding.FragmentLaporanBinding
-import com.example.inventory.ui.fragment.laporan.view.TabFragmentDaftar
 import com.example.inventory.ui.fragment.laporan.view.TabFragmentHasil
 import com.example.inventory.ui.fragment.laporan.view.TabFragmentRiwayat
+import com.example.inventory.ui.fragment.laporan.view.daftar.TabFragmentDaftar
 import com.google.android.material.tabs.TabLayout
 
 class LaporanFragment : Fragment() {
 
     private var _binding: FragmentLaporanBinding? = null
-
     private val binding get() = _binding!!
-
     private var tabLayout: TabLayout? = null
     private var frameLayout: FrameLayout? = null
     var fragment: Fragment? = null
@@ -34,17 +32,15 @@ class LaporanFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentLaporanBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.tvLaporan
-        textView.text = "Laporan"
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val textView: TextView = binding.tvLaporan
+        textView.text = "Laporan"
 
         tabLayout = binding.tabLayout
         frameLayout = binding.frameLayout
@@ -68,13 +64,9 @@ class LaporanFragment : Fragment() {
                 fragmentTransaction!!.commit()
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
 
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
-            }
+            override fun onTabReselected(tab: TabLayout.Tab) {}
         })
     }
 

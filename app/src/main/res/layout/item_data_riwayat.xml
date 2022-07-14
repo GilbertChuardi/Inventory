@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cv_item_inventaris"
+    android:id="@+id/cv_item_riwayat"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="2dp"
@@ -17,7 +17,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_nama_barang"
+            android:id="@+id/tv_nama_barang_riwayat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -28,7 +28,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_kode_barang"
+            android:id="@+id/tv_kode_barang_riwayat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -39,12 +39,11 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_jumlah_barang"
-        android:layout_width="96dp"
+        android:id="@+id/tv_jumlah_barang_riwayat"
+        android:layout_width="114dp"
         android:layout_height="64dp"
         android:layout_gravity="right"
-        android:gravity="end|center_vertical"
-        android:paddingRight="8dp"
+        android:gravity="center"
         android:text="0"
         android:textColor="@color/black"
         android:textSize="15sp" />
