@@ -39,6 +39,7 @@ class TambahActivity : AppCompatActivity(), View.OnClickListener {
         val namaSupplier = binding.etNamaSupplier.text.toString().trim()
         val hargaBarang = binding.etHargaBarang.text.toString().trim()
         val jumlahBarang = binding.etJumlahBarang.text.toString().trim()
+        val satuanBarang = binding.etSatuanBarang.text.toString().trim()
         val id = db.collection("Inventaris").document().id
 
         if (namaBarang.isNotEmpty() &&
@@ -46,7 +47,8 @@ class TambahActivity : AppCompatActivity(), View.OnClickListener {
             merekBarang.isNotEmpty() &&
             namaSupplier.isNotEmpty() &&
             hargaBarang.isNotEmpty() &&
-            jumlahBarang.isNotEmpty()
+            jumlahBarang.isNotEmpty() &&
+            satuanBarang.isNotEmpty()
         ) {
             val data = hashMapOf(
                 "nama_barang" to namaBarang,
@@ -55,6 +57,7 @@ class TambahActivity : AppCompatActivity(), View.OnClickListener {
                 "nama_supplier" to namaSupplier,
                 "harga_barang" to hargaBarang.toInt(),
                 "jumlah_barang" to jumlahBarang.toInt(),
+                "satuan_barang" to satuanBarang,
                 "id" to id
             )
 
@@ -78,6 +81,8 @@ class TambahActivity : AppCompatActivity(), View.OnClickListener {
             binding.etHargaBarang.error = "Masukkan harga barang"
         } else if (binding.etJumlahBarang.text?.trim()?.isEmpty() == true) {
             binding.etJumlahBarang.error = "Masukkan jumlah barang"
+        } else if (binding.etSatuanBarang.text?.trim()?.isEmpty() == true) {
+
         }
 
     }

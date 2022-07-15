@@ -11,5 +11,6 @@ class DataModel(
     val kode_barang: String = "",
     val merek_barang: String = "",
     var nama_barang: String = "",
-    var nama_supplier: String = ""
+    var nama_supplier: String = "",
+    var satuan_barang: String = ""
 ) : Parcelable

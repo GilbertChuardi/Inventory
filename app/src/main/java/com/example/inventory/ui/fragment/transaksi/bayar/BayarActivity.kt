@@ -39,6 +39,7 @@ class BayarActivity : AppCompatActivity(), View.OnClickListener {
     private var jlhBeli = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     private var jlhBrg = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     private var namaBrg = arrayOf("", "", "", "", "", "", "", "", "", "")
+    private var satuanBrg = arrayOf("", "", "", "", "", "", "", "", "", "")
     private lateinit var binding: ActivityBayarBinding
     private lateinit var adapter: ProductFirestoreRecyclerAdapter
     private var totalHarga: Int = 0
@@ -84,7 +85,8 @@ class BayarActivity : AppCompatActivity(), View.OnClickListener {
             val etBeliBarang: EditText = holder.itemView.findViewById(R.id.et_jumlah_barang_bayar)
             tvNamaBarang.text = model.nama_barang
             tvHargaBarang.text = "Rp. " + model.harga_barang.toString()
-            tvJumlahBarang.text = "Stok: " + model.jumlah_barang.toString()
+            tvJumlahBarang.text =
+                "Stok: " + model.jumlah_barang.toString() + " " + model.satuan_barang
             if (jlhBeli[holder.adapterPosition] != 0) {
                 etBeliBarang.text = Editable.Factory.getInstance()
                     .newEditable(jlhBeli[holder.adapterPosition].toString())
@@ -106,6 +108,7 @@ class BayarActivity : AppCompatActivity(), View.OnClickListener {
                 }
             ))
             namaBrg[holder.adapterPosition] = model.nama_barang
+            satuanBrg[holder.adapterPosition] = model.satuan_barang
             val watcher1 = Watcher1()
             watcher1.updatePosition(holder.adapterPosition)
             watcher1.update(model.harga_barang, model.jumlah_barang)
@@ -222,6 +225,7 @@ class BayarActivity : AppCompatActivity(), View.OnClickListener {
         val data = hashMapOf(
             "data_nama_item" to namaBrg.toList(),
             "data_total_item" to jlhBeli.toList(),
+            "data_satuan_item" to satuanBrg.toList(),
             "tanggal" to ts,
             "total_harga" to totalHarga,
             "nama" to nama
@@ -250,6 +254,7 @@ class BayarActivity : AppCompatActivity(), View.OnClickListener {
         val data = hashMapOf(
             "data_nama_item" to namaBrg.toList(),
             "data_total_item" to jlhBeli.toList(),
+            "data_satuan_item" to satuanBrg.toList(),
             "tanggal" to ts,
             "total_harga" to totalHarga,
             "nama" to nama,
@@ -360,6 +365,14 @@ class BayarActivity : AppCompatActivity(), View.OnClickListener {
             val arrList = jlhBeli.toMutableList()
             arrList.removeAt(k)
             jlhBeli = arrList.toTypedArray()
+            k--
+        }
+
+        k = satuanBrg.size - 1
+        while (k > namaBrg.size - 1) {
+            val arrList = satuanBrg.toMutableList()
+            arrList.removeAt(k)
+            satuanBrg = arrList.toTypedArray()
             k--
         }
 

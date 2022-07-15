@@ -32,6 +32,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
         binding.etMerekBarangDetail.setText(dataItem.merek_barang)
         binding.etNamaBarangDetail.setText(dataItem.nama_barang)
         binding.etNamaSupplierDetail.setText(dataItem.nama_supplier)
+        binding.etSatuanBarangDetail.setText(dataItem.satuan_barang)
 
         binding.btnSubmitDetail.setOnClickListener(this)
         binding.btnBackDetail.setOnClickListener(this)
@@ -56,7 +57,8 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
             binding.etMerekBarangDetail.text?.trim()?.isNotEmpty() == true &&
             binding.etNamaSupplierDetail.text?.trim()?.isNotEmpty() == true &&
             binding.etHargaBarangDetail.text?.trim()?.isNotEmpty() == true &&
-            binding.etJumlahBarangDetail.text?.trim()?.isNotEmpty() == true
+            binding.etJumlahBarangDetail.text?.trim()?.isNotEmpty() == true &&
+            binding.etSatuanBarangDetail.text?.trim()?.isNotEmpty() == true
         ) {
             db.collection("Inventaris")
                 .document(dataItem.id)
@@ -68,6 +70,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
                         "nama_supplier" to binding.etNamaSupplierDetail.text.toString(),
                         "harga_barang" to binding.etHargaBarangDetail.text.toString().toInt(),
                         "jumlah_barang" to binding.etJumlahBarangDetail.text.toString().toInt(),
+                        "satuan_barang" to binding.etSatuanBarangDetail.text.toString(),
                         "id" to dataItem.id
                     )
                 )
@@ -88,6 +91,8 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
             binding.etHargaBarangDetail.error = "Masukkan harga barang"
         } else if (binding.etJumlahBarangDetail.text?.trim()?.isEmpty() == true) {
             binding.etJumlahBarangDetail.error = "Masukkan jumlah barang"
+        } else if (binding.etSatuanBarangDetail.text?.trim()?.isEmpty() == true) {
+            binding.etSatuanBarangDetail.error = "Masukkan satuan barang"
         }
     }
 

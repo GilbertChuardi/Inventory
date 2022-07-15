@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.inventory.R
 import com.example.inventory.databinding.ActivityDetailDaftarBinding
 import com.example.inventory.model.DaftarModel
-import com.example.inventory.ui.fragment.inventaris.detail.DetailActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.NumberFormat
 
@@ -26,7 +25,7 @@ class DetailDaftarActivity : AppCompatActivity(), View.OnClickListener {
 
         db = FirebaseFirestore.getInstance()
 
-        dataItem = intent.getParcelableExtra(DetailActivity.EXTRA_DATA)!!
+        dataItem = intent.getParcelableExtra(EXTRA_DATA)!!
         supportActionBar?.hide()
 
         numberFormat1.maximumFractionDigits = 0
@@ -41,10 +40,19 @@ class DetailDaftarActivity : AppCompatActivity(), View.OnClickListener {
                     dataItem.data_nama_item[i],
                     " : ",
                     dataItem.data_total_item[i],
+                    " ",
+                    dataItem.data_satuan_item[i],
                     "\n"
                 )
             } else {
-                sb.append("- ", dataItem.data_nama_item[i], " : ", dataItem.data_total_item[i])
+                sb.append(
+                    "- ",
+                    dataItem.data_nama_item[i],
+                    " : ",
+                    dataItem.data_total_item[i],
+                    " ",
+                    dataItem.data_satuan_item[i]
+                )
             }
             i++
         }

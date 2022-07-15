@@ -9,6 +9,7 @@ var tsdm = Timestamp(0, 0)
 @Parcelize
 class DaftarModel(
     val data_nama_item: List<String> = arrayOf("0").toList(),
+    val data_satuan_item: List<String> = arrayOf("0").toList(),
     val data_total_item: List<Int> = arrayOf(0).toList(),
     val nama: String = "",
     val tanggal: Timestamp = tsdm,

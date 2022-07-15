@@ -49,7 +49,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Nama Barang"
                 android:importantForAutofill="no"
-                android:inputType="text" />
+                android:inputType="text"
+                android:maxLength="25" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,7 +67,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Kode Barang"
                 android:importantForAutofill="no"
-                android:inputType="text" />
+                android:inputType="text"
+                android:maxLength="8" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,7 +84,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Merek"
                 android:importantForAutofill="no"
-                android:inputType="text" />
+                android:inputType="text"
+                android:maxLength="25" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,25 +101,42 @@
                 android:layout_height="wrap_content"
                 android:hint="Nama Supplier"
                 android:importantForAutofill="no"
-                android:inputType="text" />
+                android:inputType="text"
+                android:maxLength="25" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_marginBottom="16dp">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_harga_barang_detail"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Harga"
-                android:importantForAutofill="no"
-                android:inputType="number" />
+                android:layout_height="64dp"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="1">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_harga_barang_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Harga"
+                    android:importantForAutofill="no"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <EditText
+                android:id="@+id/et_satuan_barang_detail"
+                android:layout_width="80dp"
+                android:layout_height="55dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/et_border"
+                android:backgroundTint="#808080"
+                android:paddingStart="8dp" />
+        </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -130,7 +150,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Jumlah Barang"
                 android:importantForAutofill="no"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="5" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

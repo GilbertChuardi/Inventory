@@ -84,6 +84,8 @@ class TabFragmentRiwayat : Fragment() {
                                     model.data_nama_item[i],
                                     " : ",
                                     model.data_total_item[i],
+                                    " ",
+                                    model.data_satuan_item[i],
                                     "\n"
                                 )
                             } else {
@@ -91,7 +93,9 @@ class TabFragmentRiwayat : Fragment() {
                                     "- ",
                                     model.data_nama_item[i],
                                     " : ",
-                                    model.data_total_item[i]
+                                    model.data_total_item[i],
+                                    " ",
+                                    model.data_satuan_item[i],
                                 )
                             }
                             i++

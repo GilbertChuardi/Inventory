@@ -72,7 +72,8 @@ class TransaksiFragment : Fragment(), View.OnClickListener {
 
             tvNamaBarang.text = model.nama_barang
             tvHargaBarang.text = "Rp. " + model.harga_barang.toString()
-            tvJumlahBarang.text = "Stok: " + model.jumlah_barang.toString()
+            tvJumlahBarang.text =
+                "Stok: " + model.jumlah_barang.toString() + " " + model.satuan_barang
 
             if (checkedItem.size != 0) {
                 var i = 0

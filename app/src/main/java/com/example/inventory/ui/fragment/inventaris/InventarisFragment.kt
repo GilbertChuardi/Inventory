@@ -61,10 +61,12 @@ class InventarisFragment : Fragment(), View.OnClickListener {
             val tvNamaBarang: TextView = holder.itemView.findViewById(R.id.tv_nama_barang)
             val tvKodeBarang: TextView = holder.itemView.findViewById(R.id.tv_kode_barang)
             val tvJumlahBarang: TextView = holder.itemView.findViewById(R.id.tv_jumlah_barang)
+            val tvSatuanBarang: TextView = holder.itemView.findViewById(R.id.tv_satuan_barang)
             val cvItem: CardView = holder.itemView.findViewById(R.id.cv_item_inventaris)
             tvNamaBarang.text = model.nama_barang
             tvKodeBarang.text = model.kode_barang
             tvJumlahBarang.text = model.jumlah_barang.toString()
+            tvSatuanBarang.text = model.satuan_barang
             cvItem.setOnClickListener(CustomOnItemClickListener(
                 position,
                 object : CustomOnItemClickListener.OnItemClickCallback {
