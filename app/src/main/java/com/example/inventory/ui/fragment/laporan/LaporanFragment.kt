@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -39,15 +38,12 @@ class LaporanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val textView: TextView = binding.tvLaporan
-        textView.text = "Laporan"
-
         tabLayout = binding.tabLayout
         frameLayout = binding.frameLayout
 
         fragment = TabFragmentHasil()
         fragmentManager1 = childFragmentManager
-        fragmentTransaction = requireFragmentManager().beginTransaction()
+        fragmentTransaction = childFragmentManager.beginTransaction()
         fragmentTransaction!!.replace(R.id.frame_layout, fragment as TabFragmentHasil)
         fragmentTransaction!!.commit()
 
@@ -59,7 +55,7 @@ class LaporanFragment : Fragment() {
                     2 -> fragment = TabFragmentDaftar()
 
                 }
-                fragmentTransaction = requireFragmentManager().beginTransaction()
+                fragmentTransaction = childFragmentManager.beginTransaction()
                 fragmentTransaction!!.replace(R.id.frame_layout, fragment!!)
                 fragmentTransaction!!.commit()
             }

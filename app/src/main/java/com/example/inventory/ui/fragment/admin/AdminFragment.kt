@@ -71,7 +71,7 @@ class AdminFragment : Fragment(), View.OnClickListener {
         val dialogLayout = inflater.inflate(R.layout.alertdialog_ganti_password, null)
         val editText1 = dialogLayout.findViewById<EditText>(R.id.et_ganti_password)
         val builder = AlertDialog.Builder(context)
-            .setTitle("Masukkan assword baru")
+            .setTitle("Masukkan password baru")
             .setView(dialogLayout)
             .setPositiveButton("OK", null)
             .show()

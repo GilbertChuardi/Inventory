@@ -9,9 +9,9 @@ import com.example.inventory.databinding.FragmentTabHasilBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.NumberFormat
 
-
 class TabFragmentHasil : Fragment() {
 
+    private var totalProfit: Long = 0
     private var _binding: FragmentTabHasilBinding? = null
     private val binding get() = _binding!!
     private val numberFormat1: NumberFormat = NumberFormat.getCurrencyInstance()
@@ -31,20 +31,15 @@ class TabFragmentHasil : Fragment() {
 
         numberFormat1.maximumFractionDigits = 0
 
-        db.collection("omset").document("omset")
+        db.collection("transaksi")
             .get()
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    val data = it.result.data
-                    data?.let {
-                        for ((_, value) in data) {
-                            val omset = value as Long
-                            val convert = numberFormat1.format(omset.toInt())
-                            binding.tvTotalOmset.text =
-                                "Total omset : Rp " + convert.removeRange(0, 1)
-                        }
-                    }
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    totalProfit += document["total_profit"].toString().toLong()
                 }
+                val convert = numberFormat1.format(totalProfit)
+                binding.tvTotalPendapatan.text =
+                    "Total Pendapatan : Rp. " + convert.removeRange(0, 1)
             }
     }
 }

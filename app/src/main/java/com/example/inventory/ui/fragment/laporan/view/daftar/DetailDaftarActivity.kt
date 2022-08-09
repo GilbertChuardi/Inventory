@@ -2,12 +2,14 @@ package com.example.inventory.ui.fragment.laporan.view.daftar
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.inventory.R
 import com.example.inventory.databinding.ActivityDetailDaftarBinding
 import com.example.inventory.model.DaftarModel
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.NumberFormat
 
@@ -22,46 +24,36 @@ class DetailDaftarActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailDaftarBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        db = FirebaseFirestore.getInstance()
-
         dataItem = intent.getParcelableExtra(EXTRA_DATA)!!
         supportActionBar?.hide()
+
+        db = FirebaseFirestore.getInstance()
 
         numberFormat1.maximumFractionDigits = 0
         val convert = numberFormat1.format(dataItem.total_harga)
 
-        val sb = StringBuilder()
-        var i = 0
-        while (i < dataItem.data_nama_item.size) {
-            if (i != dataItem.data_nama_item.size - 1) {
-                sb.append(
-                    "- ",
-                    dataItem.data_nama_item[i],
-                    " : ",
-                    dataItem.data_total_item[i],
-                    " ",
-                    dataItem.data_satuan_item[i],
-                    "\n"
-                )
-            } else {
-                sb.append(
-                    "- ",
-                    dataItem.data_nama_item[i],
-                    " : ",
-                    dataItem.data_total_item[i],
-                    " ",
-                    dataItem.data_satuan_item[i]
-                )
+        db.collection("transaksip_penjualan").whereEqualTo("id", dataItem.transaksi_penjualan_id)
+            .get()
+            .addOnSuccessListener { documents ->
+                val sb = StringBuilder()
+                for (document in documents) {
+                    sb.append(
+                        "- ",
+                        document["nama_barang"],
+                        " : ",
+                        document["jumlah_jual"],
+                        " ",
+                        document["satuan_barang"],
+                        "\n"
+                    )
+                }
+                binding.tvNamaPembeliDaftar.text = "Nama Pembeli: " + dataItem.nama_pembeli
+                binding.tvDataDaftar.text = sb.toString()
+                binding.tvTanggalDaftar.text =
+                    dataItem.tanggal_penjualan.toDate().toLocaleString().toString()
+                binding.tvTotalHargaDaftar.text = "Rp. " + convert.removeRange(0, 1)
+                binding.etKeteranganDaftar.setText(dataItem.keterangan)
             }
-            i++
-        }
-
-        binding.tvNamaPembeliDaftar.text = "Nama Pembeli: " + dataItem.nama
-        binding.tvDataDaftar.text = sb.toString()
-        binding.tvTanggalDaftar.text = dataItem.tanggal.toDate().toLocaleString().toString()
-        binding.tvTotalHargaDaftar.text = "Rp. " + convert.removeRange(0, 1)
-        binding.etKeteranganDaftar.setText(dataItem.keterangan)
 
         binding.btnBackDetailDaftar.setOnClickListener(this)
         binding.btnUpdateDetailDaftar.setOnClickListener(this)
@@ -77,7 +69,7 @@ class DetailDaftarActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun updateItem() {
-        db.collection("daftar_piutang").document(dataItem.id)
+        db.collection("transaksip").document(dataItem.id)
             .update("keterangan", binding.etKeteranganDaftar.text.toString())
             .addOnSuccessListener {
                 Toast.makeText(this, "Data sudah terupdate", Toast.LENGTH_SHORT).show()
@@ -86,7 +78,7 @@ class DetailDaftarActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun alertDialogDelete() {
         AlertDialog.Builder(this)
-            .setTitle("Hapus Data")
+            .setTitle("Hapus dari piutang")
             .setMessage("Apakah data ini sudah lunas?")
             .setPositiveButton(
                 "Hapus"
@@ -96,7 +88,54 @@ class DetailDaftarActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun deleteItem() {
-        db.collection("daftar_piutang")
+
+        val t = Timestamp.now()
+        val ts = Timestamp(t.seconds, 0)
+
+        val dataInvoice = hashMapOf(
+            "nama_pembeli" to dataItem.nama_pembeli,
+            "tanggal_penjualan" to ts,
+            "total_harga" to dataItem.total_harga,
+            "total_profit" to dataItem.total_profit,
+            "transaksi_penjualan_id" to dataItem.transaksi_penjualan_id
+        )
+
+        db.collection("transaksi")
+            .document()
+            .set(dataInvoice)
+            .addOnSuccessListener {
+                Log.d("Tag", "invoice transaksi sudah ditambah")
+            }
+
+        db.collection("transaksip_penjualan").whereEqualTo("id", dataItem.transaksi_penjualan_id)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val data = hashMapOf(
+                        "id" to document["id"],
+                        "jumlah_jual" to document["jumlah_jual"].toString().toInt(),
+                        "nama_barang" to document["nama_barang"],
+                        "satuan_barang" to document["satuan_barang"]
+                    )
+
+                    db.collection("transaksi_penjualan")
+                        .document()
+                        .set(data)
+                        .addOnSuccessListener {
+                            Log.d("Tag", "transaksip sudah dipindah")
+                        }
+
+                    db.collection("transaksip_penjualan")
+                        .document(document["penjualan_id"].toString())
+                        .delete()
+                        .addOnSuccessListener {
+                            Log.d("Tag", "transaksip_penjualan sudah didelete")
+                        }
+                }
+            }
+
+
+        db.collection("transaksip")
             .document(dataItem.id)
             .delete()
             .addOnSuccessListener {

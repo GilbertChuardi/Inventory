@@ -7,26 +7,15 @@
     tools:context=".ui.fragment.laporan.view.TabFragmentHasil">
 
     <TextView
-        android:id="@+id/tv_total_omset"
+        android:id="@+id/tv_total_pendapatan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Total Omset :"
+        android:text="Total Pendapatan :"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--<TextView
-        android:id="@+id/tv_total_barang_hasil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Total Barang Kejual :"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_total_omset" />
--->
 </androidx.constraintlayout.widget.ConstraintLayout>

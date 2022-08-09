@@ -40,7 +40,8 @@ class TabFragmentDaftar : Fragment() {
 
         binding.recyclerViewDaftar.layoutManager = LinearLayoutManager(context)
         val db = FirebaseFirestore.getInstance()
-        val query = db.collection("daftar_piutang").orderBy("tanggal", Query.Direction.DESCENDING)
+        val query =
+            db.collection("transaksip").orderBy("tanggal_penjualan", Query.Direction.DESCENDING)
         val options =
             FirestoreRecyclerOptions.Builder<DaftarModel>().setQuery(query, DaftarModel::class.java)
                 .build()
@@ -63,9 +64,9 @@ class TabFragmentDaftar : Fragment() {
             val tvTanggal: TextView = holder.itemView.findViewById(R.id.tv_kode_barang_riwayat)
             val tvTotal: TextView = holder.itemView.findViewById(R.id.tv_jumlah_barang_riwayat)
             val cvItem: CardView = holder.itemView.findViewById(R.id.cv_item_riwayat)
-            val tanggal = model.tanggal.toDate().toLocaleString().toString()
+            val tanggal = model.tanggal_penjualan.toDate().toLocaleString().toString()
             val convert = numberFormat1.format(model.total_harga)
-            tvNama.text = model.nama
+            tvNama.text = model.nama_pembeli
             tvTanggal.text = tanggal.removeRange(12, tanggal.length)
             tvTotal.text = "Rp. " + convert.removeRange(0, 1)
             cvItem.setOnClickListener(CustomOnItemClickListener(

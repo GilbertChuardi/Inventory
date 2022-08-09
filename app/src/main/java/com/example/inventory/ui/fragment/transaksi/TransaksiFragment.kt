@@ -14,17 +14,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.inventory.CustomOnItemClickListener
 import com.example.inventory.R
 import com.example.inventory.databinding.FragmentTransaksiBinding
-import com.example.inventory.model.TransaksiModel
+import com.example.inventory.model.BarangModel
 import com.example.inventory.ui.fragment.transaksi.bayar.BayarActivity
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import java.text.NumberFormat
 
 class TransaksiFragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentTransaksiBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: ProductFirestoreRecyclerAdapter
+    private val numberFormat1: NumberFormat = NumberFormat.getCurrencyInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,26 +45,28 @@ class TransaksiFragment : Fragment(), View.OnClickListener {
 
         binding.recyclerViewTransaksi.layoutManager = LinearLayoutManager(context)
         val db = FirebaseFirestore.getInstance()
-        val query = db.collection("Inventaris")
+        val query = db.collection("barang").orderBy("kode_barang", Query.Direction.ASCENDING)
         val options =
-            FirestoreRecyclerOptions.Builder<TransaksiModel>()
-                .setQuery(query, TransaksiModel::class.java)
+            FirestoreRecyclerOptions.Builder<BarangModel>()
+                .setQuery(query, BarangModel::class.java)
                 .build()
         adapter = ProductFirestoreRecyclerAdapter(options)
         binding.recyclerViewTransaksi.adapter = adapter
+
+        numberFormat1.maximumFractionDigits = 0
 
         binding.btnBayar.setOnClickListener(this)
     }
 
     private inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-    private inner class ProductFirestoreRecyclerAdapter(options: FirestoreRecyclerOptions<TransaksiModel>) :
-        FirestoreRecyclerAdapter<TransaksiModel, ProductViewHolder>(options) {
+    private inner class ProductFirestoreRecyclerAdapter(options: FirestoreRecyclerOptions<BarangModel>) :
+        FirestoreRecyclerAdapter<BarangModel, ProductViewHolder>(options) {
         var checkedItem = ArrayList<String>()
         override fun onBindViewHolder(
             holder: ProductViewHolder,
             position: Int,
-            model: TransaksiModel
+            model: BarangModel
         ) {
             val tvNamaBarang: TextView = holder.itemView.findViewById(R.id.tv_nama_barang_transaksi)
             val tvHargaBarang: TextView =
@@ -71,7 +76,9 @@ class TransaksiFragment : Fragment(), View.OnClickListener {
             val checkBox: CheckBox = holder.itemView.findViewById(R.id.cb_transaksi)
 
             tvNamaBarang.text = model.nama_barang
-            tvHargaBarang.text = "Rp. " + model.harga_barang.toString()
+
+            val convert = numberFormat1.format(model.harga_jual)
+            tvHargaBarang.text = "Rp. " + convert.removeRange(0, 1)
             tvJumlahBarang.text =
                 "Stok: " + model.jumlah_barang.toString() + " " + model.satuan_barang
 

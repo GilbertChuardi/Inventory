@@ -3,13 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_inventaris">
+    app:startDestination="@+id/navigation_home">
 
     <fragment
-        android:id="@+id/navigation_inventaris"
-        android:name="com.example.inventory.ui.fragment.inventaris.InventarisFragment"
-        android:label="inventaris"
-        tools:layout="@layout/fragment_inventaris" />
+        android:id="@+id/navigation_home"
+        android:name="com.example.inventory.ui.fragment.home.HomeFragment"
+        android:label="home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_pembelian"
+        android:name="com.example.inventory.ui.fragment.pembelian.PembelianFragment"
+        android:label="home"
+        tools:layout="@layout/fragment_pembelian" />
 
     <fragment
         android:id="@+id/navigation_transaksi"

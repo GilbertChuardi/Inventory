@@ -10,13 +10,14 @@ import com.example.inventory.R
 import com.example.inventory.databinding.ActivityMasukBinding
 import com.example.inventory.ui.fragment.MainActivity
 import com.example.inventory.util.TypeFaceUtil
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Masuk : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityMasukBinding
-    private var db = Firebase.firestore
+    private lateinit var db: FirebaseFirestore
+    private var i = 0
+    private var userpass = arrayOf("", "")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +30,12 @@ class Masuk : AppCompatActivity(), View.OnClickListener {
 
         val myFont: Typeface = Typeface.createFromAsset(this.assets, "font/interbold.ttf")
         binding.tvMasuk.typeface = myFont
+        binding.etUsername.typeface = myFont
         binding.etPassword.typeface = myFont
         binding.btnMasuk.typeface = myFont
+        binding.tvSalah.typeface = myFont
+
+        db = FirebaseFirestore.getInstance()
 
         binding.btnMasuk.setOnClickListener(this)
 
@@ -51,31 +56,41 @@ class Masuk : AppCompatActivity(), View.OnClickListener {
 
     private fun login() {
         binding.tvSalah.visibility = View.INVISIBLE
-        if (binding.etPassword.text.toString().isEmpty()) {
-            binding.tvSalah.text = "Password tidak ada!"
-            binding.tvSalah.visibility = View.VISIBLE
-        } else if (binding.etPassword.text.toString().isNotEmpty()) {
-            binding.pbLoading.visibility = View.VISIBLE
-            val pass = db.collection("admin").document("admin")
-            pass.get()
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val data = it.result.data
-                        data?.let {
-                            for ((_, value) in data) {
-                                val password = value as String
-                                if (binding.etPassword.text.toString() != password) {
-                                    binding.tvSalah.text = "Password salah!"
-                                    binding.tvSalah.visibility = View.VISIBLE
-                                } else {
+        when {
+            binding.etPassword.text.toString().isEmpty() -> {
+                binding.tvSalah.text = "Password tidak ada!"
+                binding.tvSalah.visibility = View.VISIBLE
+            }
+            binding.etUsername.text.toString().isEmpty() -> {
+                binding.tvSalah.text = "Username tidak ada!"
+                binding.tvSalah.visibility = View.VISIBLE
+            }
+            binding.etPassword.text.toString().isNotEmpty() -> {
+                binding.pbLoading.visibility = View.VISIBLE
+                val pass = db.collection("admin").document("admin")
+                pass.get()
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            val data = it.result.data
+                            data?.let {
+                                for ((_, value) in data) {
+                                    val password = value as String
+                                    userpass[i] = password
+                                    i++
+                                }
+                                i = 0
+                                if (binding.etUsername.text.toString() == userpass[1] && binding.etPassword.text.toString() == userpass[0]) {
                                     startActivity(Intent(this, MainActivity::class.java))
                                     finish()
+                                } else {
+                                    binding.tvSalah.text = "Username / Password salah!"
+                                    binding.tvSalah.visibility = View.VISIBLE
                                 }
                                 binding.pbLoading.visibility = View.INVISIBLE
                             }
                         }
                     }
-                }
+            }
         }
     }
 

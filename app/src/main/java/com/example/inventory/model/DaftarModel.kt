@@ -8,12 +8,11 @@ var tsdm = Timestamp(0, 0)
 
 @Parcelize
 class DaftarModel(
-    val data_nama_item: List<String> = arrayOf("0").toList(),
-    val data_satuan_item: List<String> = arrayOf("0").toList(),
-    val data_total_item: List<Int> = arrayOf(0).toList(),
-    val nama: String = "",
-    val tanggal: Timestamp = tsdm,
-    val total_harga: Int = 0,
+    val id: String = "",
     val keterangan: String = "",
-    val id: String = ""
+    val nama_pembeli: String = "",
+    val tanggal_penjualan: Timestamp = tsdm,
+    val total_harga: Int = 0,
+    val total_profit: Int = 0,
+    val transaksi_penjualan_id: String = ""
 ) : Parcelable

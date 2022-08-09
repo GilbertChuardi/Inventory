@@ -27,6 +27,7 @@ class TabFragmentRiwayat : Fragment() {
     private val binding get() = _binding!!
     private var adapter: ProductFirestoreRecyclerAdapter? = null
     private val numberFormat1: NumberFormat = NumberFormat.getCurrencyInstance()
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,9 +41,9 @@ class TabFragmentRiwayat : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        val db = FirebaseFirestore.getInstance()
+        db = FirebaseFirestore.getInstance()
         val query =
-            db.collection("riwayat_penjualan").orderBy("tanggal", Query.Direction.DESCENDING)
+            db.collection("transaksi").orderBy("tanggal_penjualan", Query.Direction.DESCENDING)
         val options =
             FirestoreRecyclerOptions.Builder<RiwayatModel>()
                 .setQuery(query, RiwayatModel::class.java)
@@ -66,9 +67,9 @@ class TabFragmentRiwayat : Fragment() {
             val tvTanggal: TextView = holder.itemView.findViewById(R.id.tv_kode_barang_riwayat)
             val tvTotalHarga: TextView = holder.itemView.findViewById(R.id.tv_jumlah_barang_riwayat)
             val cvItem: CardView = holder.itemView.findViewById(R.id.cv_item_riwayat)
-            val tanggal = model.tanggal.toDate().toLocaleString().toString()
+            val tanggal = model.tanggal_penjualan.toDate().toLocaleString().toString()
             val convert = numberFormat1.format(model.total_harga)
-            tvNamaPembeli.text = model.nama
+            tvNamaPembeli.text = model.nama_pembeli
             tvTanggal.text = tanggal.removeRange(12, tanggal.length)
             tvTotalHarga.text = "Rp. " + convert.removeRange(0, 1)
             cvItem.setOnClickListener(CustomOnItemClickListener(
@@ -76,53 +77,46 @@ class TabFragmentRiwayat : Fragment() {
                 object : CustomOnItemClickListener.OnItemClickCallback {
                     override fun onItemClicked(view: View, position: Int) {
                         val sb = StringBuilder()
-                        var i = 0
-                        while (i < model.data_nama_item.size) {
-                            if (i != model.data_nama_item.size - 1) {
-                                sb.append(
-                                    "- ",
-                                    model.data_nama_item[i],
-                                    " : ",
-                                    model.data_total_item[i],
-                                    " ",
-                                    model.data_satuan_item[i],
-                                    "\n"
-                                )
-                            } else {
-                                sb.append(
-                                    "- ",
-                                    model.data_nama_item[i],
-                                    " : ",
-                                    model.data_total_item[i],
-                                    " ",
-                                    model.data_satuan_item[i],
-                                )
+
+                        db.collection("transaksi_penjualan")
+                            .whereEqualTo("id", model.transaksi_penjualan_id)
+                            .get()
+                            .addOnSuccessListener { documents ->
+                                for (document in documents) {
+                                    sb.append(
+                                        "- ",
+                                        document["nama_barang"],
+                                        " : ",
+                                        document["jumlah_jual"],
+                                        " ",
+                                        document["satuan_barang"],
+                                        "\n"
+                                    )
+                                }
+                                val inflater = layoutInflater
+                                val dialogLayout =
+                                    inflater.inflate(R.layout.alertdialog_detail_riwayat, null)
+                                val tvDetailNama =
+                                    dialogLayout.findViewById<TextView>(R.id.tv_detail_riwayat_nama)
+                                val tvDetailData =
+                                    dialogLayout.findViewById<TextView>(R.id.tv_detail_riwayat_data)
+                                val tvDetailTanggal =
+                                    dialogLayout.findViewById<TextView>(R.id.tv_detail_riwayat_tanggal)
+                                val tvDetailTotalHarga =
+                                    dialogLayout.findViewById<TextView>(R.id.tv_detail_riwayat_total_harga)
+
+                                tvDetailNama.text = "Nama Pembeli : " + model.nama_pembeli
+                                tvDetailData.text = sb.toString()
+                                tvDetailTanggal.text =
+                                    model.tanggal_penjualan.toDate().toLocaleString().toString()
+                                tvDetailTotalHarga.text = "Rp. " + convert.removeRange(0, 1)
+
+                                AlertDialog.Builder(activity)
+                                    .setTitle("Detail Riwayat")
+                                    .setView(dialogLayout)
+                                    .setPositiveButton("OK") { _, _ -> }
+                                    .show()
                             }
-                            i++
-                        }
-
-                        val inflater = layoutInflater
-                        val dialogLayout =
-                            inflater.inflate(R.layout.alertdialog_detail_riwayat, null)
-                        val tvDetailNama =
-                            dialogLayout.findViewById<TextView>(R.id.tv_detail_riwayat_nama)
-                        val tvDetailData =
-                            dialogLayout.findViewById<TextView>(R.id.tv_detail_riwayat_data)
-                        val tvDetailTanggal =
-                            dialogLayout.findViewById<TextView>(R.id.tv_detail_riwayat_tanggal)
-                        val tvDetailTotalHarga =
-                            dialogLayout.findViewById<TextView>(R.id.tv_detail_riwayat_total_harga)
-
-                        tvDetailNama.text = "Nama Pembeli : " + model.nama
-                        tvDetailData.text = sb.toString()
-                        tvDetailTanggal.text = model.tanggal.toDate().toLocaleString().toString()
-                        tvDetailTotalHarga.text = "Rp. " + convert.removeRange(0, 1)
-
-                        AlertDialog.Builder(activity)
-                            .setTitle("Detail Riwayat")
-                            .setView(dialogLayout)
-                            .setPositiveButton("OK") { _, _ -> }
-                            .show()
                     }
                 }
             ))

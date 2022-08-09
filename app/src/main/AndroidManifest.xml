@@ -10,18 +10,56 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Inventory">
         <activity
-            android:name=".ui.fragment.laporan.view.daftar.DetailDaftarActivity"
+            android:name=".ui.fragment.pembelian.beli.penyesuaian.PenyesuaianActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.fragment.pembelian.beli.penyesuaian.PenyesuaianPilihBarangActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.fragment.pembelian.beli.penyesuaian.PenyesuaianPilihInvoiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.fragment.pembelian.beli.barang.PembelianBeliBarangActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.fragment.pembelian.beli.barang.PembelianPilihBarangActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.fragment.pembelian.beli.barang.PembelianPilihSupplierActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.fragment.home.pembeli.TambahPembeliActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.fragment.home.pembeli.DetailPembeliActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.fragment.home.supplier_barang.TambahSupplierBarangActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.fragment.home.supplier_barang.DetailSupplierBarangActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.fragment.home.supplier.TambahSupplierActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.fragment.home.supplier.DetailSupplierActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.fragment.laporan.view.daftar.DetailDaftarActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.fragment.transaksi.bayar.BayarActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.fragment.inventaris.tambah.TambahActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.fragment.inventaris.detail.DetailActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
