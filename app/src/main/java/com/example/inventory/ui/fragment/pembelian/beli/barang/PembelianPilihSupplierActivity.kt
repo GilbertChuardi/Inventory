@@ -63,7 +63,7 @@ class PembelianPilihSupplierActivity : AppCompatActivity(), View.OnClickListener
                 holder.itemView.findViewById(R.id.tv_harga_barang_transaksi)
             val rbSupplier: RadioButton = holder.itemView.findViewById(R.id.rb_supplier)
             tvNamaBarang.text = model.nama_supplier
-            tvHargaBarang.text = model.kode_supplier
+            tvHargaBarang.text = model.alamat_supplier
             if (selectedItem == position) {
                 rbSupplier.isChecked = true
                 Log.d("TAG", position.toString() + selectedItem.toString() + "jd true")

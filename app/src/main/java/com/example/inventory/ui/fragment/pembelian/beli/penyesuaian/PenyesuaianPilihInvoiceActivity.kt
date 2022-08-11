@@ -39,7 +39,6 @@ class PenyesuaianPilihInvoiceActivity : AppCompatActivity(), View.OnClickListene
         binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
         val query = db.collection("invoice_pembelian_barang")
             .orderBy("tanggal_invoice", Query.Direction.DESCENDING)
-            .whereEqualTo("pembayaran", "lunas")
         val options =
             FirestoreRecyclerOptions.Builder<InvoiceModel>()
                 .setQuery(query, InvoiceModel::class.java)

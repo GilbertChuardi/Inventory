@@ -5,7 +5,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class SupplierBarangModel(
-    val kode_barang: String = "",
     val nama_barang: String = "",
     val supplier_id: String = "",
     val id: String = ""

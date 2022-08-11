@@ -26,7 +26,6 @@ class DetailSupplierActivity : AppCompatActivity(), View.OnClickListener {
         db = FirebaseFirestore.getInstance()
 
         binding.etNamaSupplierDetail.setText(dataItem.nama_supplier)
-        binding.etKodeSupplierDetail.setText(dataItem.kode_supplier)
         binding.etNotelSupplierDetail.setText(dataItem.notel_supplier)
         binding.etAlamatSupplierDetail.setText(dataItem.alamat_supplier)
 
@@ -43,7 +42,6 @@ class DetailSupplierActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun updateItem() {
         if (binding.etNamaSupplierDetail.text?.trim()?.isNotEmpty() == true &&
-            binding.etKodeSupplierDetail.text?.trim()?.isNotEmpty() == true &&
             binding.etNotelSupplierDetail.text?.trim()?.isNotEmpty() == true &&
             binding.etAlamatSupplierDetail.text?.trim()?.isNotEmpty() == true
         ) {
@@ -52,7 +50,6 @@ class DetailSupplierActivity : AppCompatActivity(), View.OnClickListener {
                 .update(
                     mapOf(
                         "nama_supplier" to binding.etNamaSupplierDetail.text.toString(),
-                        "kode_supplier" to binding.etKodeSupplierDetail.text.toString(),
                         "notel_supplier" to binding.etNotelSupplierDetail.text.toString(),
                         "alamat_supplier" to binding.etAlamatSupplierDetail.text.toString(),
                         "id" to dataItem.id
@@ -65,8 +62,6 @@ class DetailSupplierActivity : AppCompatActivity(), View.OnClickListener {
             finish()
         } else if (binding.etNamaSupplierDetail.text?.trim()?.isEmpty() == true) {
             binding.etNamaSupplierDetail.error = "Masukkan nama supplier"
-        } else if (binding.etKodeSupplierDetail.text?.trim()?.isEmpty() == true) {
-            binding.etKodeSupplierDetail.error = "Masukkan kode supplier"
         } else if (binding.etNotelSupplierDetail.text?.trim()?.isEmpty() == true) {
             binding.etNotelSupplierDetail.error = "Masukkan nomor telepon"
         } else if (binding.etAlamatSupplierDetail.text?.trim()?.isEmpty() == true) {

@@ -26,7 +26,6 @@ class DetailSupplierBarangActivity : AppCompatActivity(), View.OnClickListener {
         dataItem = intent.getParcelableExtra(EXTRA_DATA)!!
 
         binding.etNamaSupplierBarangDetail.setText(dataItem.nama_barang)
-        binding.etKodeSupplierBarangDetail.setText(dataItem.kode_barang)
 
         binding.btnBackSupplierBarangDetail.setOnClickListener(this)
         binding.btnSimpanSupplierBarangDetail.setOnClickListener(this)
@@ -40,15 +39,12 @@ class DetailSupplierBarangActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun updateItem() {
-        if (binding.etNamaSupplierBarangDetail.text?.trim()?.isNotEmpty() == true &&
-            binding.etKodeSupplierBarangDetail.text?.trim()?.isNotEmpty() == true
-        ) {
+        if (binding.etNamaSupplierBarangDetail.text?.trim()?.isNotEmpty() == true) {
             db.collection("supplier_barang")
                 .document(dataItem.id)
                 .update(
                     mapOf(
                         "nama_barang" to binding.etNamaSupplierBarangDetail.text.toString(),
-                        "kode_barang" to binding.etKodeSupplierBarangDetail.text.toString(),
                         "supplier_id" to dataItem.supplier_id,
                         "id" to dataItem.id
                     )
@@ -60,8 +56,6 @@ class DetailSupplierBarangActivity : AppCompatActivity(), View.OnClickListener {
             finish()
         } else if (binding.etNamaSupplierBarangDetail.text?.trim()?.isEmpty() == true) {
             binding.etNamaSupplierBarangDetail.error = "Masukkan nama barang"
-        } else if (binding.etKodeSupplierBarangDetail.text?.trim()?.isEmpty() == true) {
-            binding.etKodeSupplierBarangDetail.error = "Masukkan kode barang"
         }
     }
 

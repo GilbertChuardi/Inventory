@@ -8,7 +8,6 @@ var tsim = Timestamp(0, 0)
 
 @Parcelize
 class InvoiceModel(
-    val pembayaran: String = "",
     val supplier_id: String = "",
     val tanggal_invoice: Timestamp = tsim,
     val total_pembelian: Int = 0,

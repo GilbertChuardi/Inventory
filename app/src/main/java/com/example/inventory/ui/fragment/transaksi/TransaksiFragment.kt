@@ -45,7 +45,7 @@ class TransaksiFragment : Fragment(), View.OnClickListener {
 
         binding.recyclerViewTransaksi.layoutManager = LinearLayoutManager(context)
         val db = FirebaseFirestore.getInstance()
-        val query = db.collection("barang").orderBy("kode_barang", Query.Direction.ASCENDING)
+        val query = db.collection("barang").orderBy("nama_barang", Query.Direction.ASCENDING)
         val options =
             FirestoreRecyclerOptions.Builder<BarangModel>()
                 .setQuery(query, BarangModel::class.java)

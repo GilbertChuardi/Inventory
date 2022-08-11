@@ -3,13 +3,10 @@ package com.example.inventory.ui.fragment.admin
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.inventory.R
@@ -38,17 +35,6 @@ class AdminFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         db = FirebaseFirestore.getInstance()
-
-        val textView: TextView = binding.tvAdmin
-        textView.text = "Admin"
-
-        val mSpannableString = SpannableString(binding.tvGantiPassword.text)
-        mSpannableString.setSpan(UnderlineSpan(), 0, mSpannableString.length, 0)
-        binding.tvGantiPassword.text = mSpannableString
-
-        val mSpannableString1 = SpannableString(binding.tvLogout.text)
-        mSpannableString1.setSpan(UnderlineSpan(), 0, mSpannableString1.length, 0)
-        binding.tvLogout.text = mSpannableString1
 
         binding.tvGantiPassword.setOnClickListener(this)
         binding.tvLogout.setOnClickListener(this)

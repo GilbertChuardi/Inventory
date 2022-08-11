@@ -17,6 +17,7 @@ import com.example.inventory.model.SupplierModel
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class TabFragmentSupplier : Fragment(), View.OnClickListener {
 
@@ -37,7 +38,7 @@ class TabFragmentSupplier : Fragment(), View.OnClickListener {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         val db = FirebaseFirestore.getInstance()
-        val query = db.collection("supplier")
+        val query = db.collection("supplier").orderBy("tanggal_buat", Query.Direction.DESCENDING)
         val options = FirestoreRecyclerOptions.Builder<SupplierModel>()
             .setQuery(query, SupplierModel::class.java)
             .build()
@@ -61,7 +62,7 @@ class TabFragmentSupplier : Fragment(), View.OnClickListener {
             val tvJumlah: TextView = holder.itemView.findViewById(R.id.tv_jumlah_barang_riwayat)
             val cvItem: CardView = holder.itemView.findViewById(R.id.cv_item_riwayat)
             tvNamaPembeli.text = model.nama_supplier
-            tvKode.text = model.kode_supplier
+            tvKode.text = model.alamat_supplier
             tvJumlah.text = ""
             cvItem.setOnClickListener(CustomOnItemClickListener(
                 position,

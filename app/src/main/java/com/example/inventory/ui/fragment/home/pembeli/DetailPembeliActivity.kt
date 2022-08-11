@@ -25,7 +25,6 @@ class DetailPembeliActivity : AppCompatActivity(), View.OnClickListener {
         dataItem = intent.getParcelableExtra(EXTRA_DATA)!!
 
         binding.etNamaPembeliDetail.setText(dataItem.nama_pembeli)
-        binding.etKodePembeliDetail.setText(dataItem.kode_pembeli)
         binding.etNotelPembeliDetail.setText(dataItem.notel_pembeli)
         binding.etAlamatPembeliDetail.setText(dataItem.alamat_pembeli)
 
@@ -42,7 +41,6 @@ class DetailPembeliActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun updateItem() {
         if (binding.etNamaPembeliDetail.text?.trim()?.isNotEmpty() == true &&
-            binding.etKodePembeliDetail.text?.trim()?.isNotEmpty() == true &&
             binding.etNotelPembeliDetail.text?.trim()?.isNotEmpty() == true &&
             binding.etAlamatPembeliDetail.text?.trim()?.isNotEmpty() == true
         ) {
@@ -51,7 +49,6 @@ class DetailPembeliActivity : AppCompatActivity(), View.OnClickListener {
                 .update(
                     mapOf(
                         "nama_pembeli" to binding.etNamaPembeliDetail.text.toString(),
-                        "kode_pembeli" to binding.etKodePembeliDetail.text.toString(),
                         "notel_pembeli" to binding.etNotelPembeliDetail.text.toString(),
                         "alamat_pembeli" to binding.etAlamatPembeliDetail.text.toString(),
                         "id" to dataItem.id
@@ -64,8 +61,6 @@ class DetailPembeliActivity : AppCompatActivity(), View.OnClickListener {
             finish()
         } else if (binding.etNamaPembeliDetail.text?.trim()?.isEmpty() == true) {
             binding.etNamaPembeliDetail.error = "Masukkan nama pembeli"
-        } else if (binding.etKodePembeliDetail.text?.trim()?.isEmpty() == true) {
-            binding.etKodePembeliDetail.error = "Masukkan kode pembeli"
         } else if (binding.etNotelPembeliDetail.text?.trim()?.isEmpty() == true) {
             binding.etNotelPembeliDetail.error = "Masukkan nomor telepon"
         } else if (binding.etAlamatPembeliDetail.text?.trim()?.isEmpty() == true) {

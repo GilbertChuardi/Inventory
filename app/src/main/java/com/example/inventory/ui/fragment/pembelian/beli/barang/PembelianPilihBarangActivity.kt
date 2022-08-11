@@ -39,7 +39,7 @@ class PembelianPilihBarangActivity : AppCompatActivity(), View.OnClickListener {
         binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
         val db = FirebaseFirestore.getInstance()
         val query = db.collection("supplier_barang").whereIn("supplier_id", dataItem).orderBy(
-            "kode_barang",
+            "nama_barang",
             Query.Direction.ASCENDING
         )
         val options =
@@ -69,7 +69,7 @@ class PembelianPilihBarangActivity : AppCompatActivity(), View.OnClickListener {
                 holder.itemView.findViewById(R.id.tv_harga_barang_transaksi)
             val checkBox: CheckBox = holder.itemView.findViewById(R.id.cb_transaksi)
             tvNamaBarang.text = model.nama_barang
-            tvKodeBarang.text = model.kode_barang
+            tvKodeBarang.text = ""
 
             if (checkedItem.size != 0) {
                 var i = 0

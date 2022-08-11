@@ -9,7 +9,6 @@ class BarangModel(
     val harga_jual: Int = 0,
     val id: String = "",
     val jumlah_barang: Int = 0,
-    val kode_barang: String = "",
     val nama_barang: String = "",
     val nama_supplier: String = "",
     val satuan_barang: String = "",

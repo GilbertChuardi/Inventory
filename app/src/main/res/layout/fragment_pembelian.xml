@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Pembelian"
+        android:text="Tambah Barang"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -29,12 +29,12 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Beli Barang" />
+            android:text="Tambah Barang" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Histori Beli Barang" />
+            android:text="Histori Tambah Barang" />
     </com.google.android.material.tabs.TabLayout>
 
     <FrameLayout

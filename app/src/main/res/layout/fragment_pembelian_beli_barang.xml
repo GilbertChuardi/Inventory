@@ -30,17 +30,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:text="Beli barang"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/btn_pembelian_penyesuaian"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:text="Penyesuaian"
+            android:text="Tambah barang"
             android:textAllCaps="false" />
     </LinearLayout>
 

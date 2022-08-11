@@ -94,8 +94,7 @@ class TabFragmentSupplierBarang : Fragment(), View.OnClickListener {
     private fun updateView(dataId: String) {
         val db = FirebaseFirestore.getInstance()
         val query = db.collection("supplier_barang").whereEqualTo("supplier_id", dataId)
-            .orderBy("kode_barang", Query.Direction.DESCENDING)
-            .orderBy("kode_barang", Query.Direction.ASCENDING)
+            .orderBy("nama_barang", Query.Direction.ASCENDING)
         val options = FirestoreRecyclerOptions.Builder<SupplierBarangModel>()
             .setQuery(query, SupplierBarangModel::class.java)
             .build()
@@ -116,7 +115,7 @@ class TabFragmentSupplierBarang : Fragment(), View.OnClickListener {
             val tvJumlah: TextView = holder.itemView.findViewById(R.id.tv_jumlah_barang_riwayat)
             val cvItem: CardView = holder.itemView.findViewById(R.id.cv_item_riwayat)
             tvNamaPembeli.text = model.nama_barang
-            tvKode.text = model.kode_barang
+            tvKode.text = ""
             tvJumlah.text = ""
             cvItem.setOnClickListener(CustomOnItemClickListener(
                 position,

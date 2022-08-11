@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.inventory.R
 import com.example.inventory.databinding.ActivityTambahPembeliBinding
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 
 class TambahPembeliActivity : AppCompatActivity(), View.OnClickListener {
@@ -37,14 +38,14 @@ class TambahPembeliActivity : AppCompatActivity(), View.OnClickListener {
     private fun createData() {
         readData(object : MyCallback {
             override fun onCallback(value: String) {
-                if (value == "adakode") {
+                if (value == "ada") {
                     Toast.makeText(
                         this@TambahPembeliActivity,
-                        "Kode pembeli sudah ada",
+                        "Nama pembeli sudah ada",
                         Toast.LENGTH_SHORT
                     )
                         .show()
-                } else if (value == "kodekosong") {
+                } else if (value == "kosong") {
                     tambahPembeli()
                 }
             }
@@ -53,19 +54,19 @@ class TambahPembeliActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun tambahPembeli() {
         val namaPembeli = binding.etNamaPembeliTambah.text.toString().trim()
-        val kodePembeli = binding.etKodePembeliTambah.text.toString().trim()
         val notelPembeli = binding.etNotelPembeliTambah.text.toString().trim()
         val alamatPembeli = binding.etAlamatPembeliTambah.text.toString().trim()
         val id = db.collection("customer").document().id
+        val t = Timestamp.now()
+        val ts = Timestamp(t.seconds, 0)
 
         if (namaPembeli.isNotEmpty() &&
-            kodePembeli.isNotEmpty() &&
             notelPembeli.isNotEmpty() &&
             alamatPembeli.isNotEmpty()
         ) {
             val data = hashMapOf(
+                "tanggal_buat" to ts,
                 "nama_pembeli" to namaPembeli,
-                "kode_pembeli" to kodePembeli,
                 "notel_pembeli" to notelPembeli,
                 "alamat_pembeli" to alamatPembeli,
                 "id" to id
@@ -81,8 +82,6 @@ class TambahPembeliActivity : AppCompatActivity(), View.OnClickListener {
 
         } else if (binding.etNamaPembeliTambah.text?.trim()?.isEmpty() == true) {
             binding.etNamaPembeliTambah.error = "Masukkan nama pembeli"
-        } else if (binding.etKodePembeliTambah.text?.trim()?.isEmpty() == true) {
-            binding.etKodePembeliTambah.error = "Masukkan kode pembeli"
         } else if (binding.etNotelPembeliTambah.text?.trim()?.isEmpty() == true) {
             binding.etNotelPembeliTambah.error = "Masukkan nomor telepon"
         } else if (binding.etAlamatPembeliTambah.text?.trim()?.isEmpty() == true) {
@@ -92,13 +91,13 @@ class TambahPembeliActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun readData(myCallback: MyCallback) {
         val cekKode = db.collection("customer")
-            .whereEqualTo("kode_pembeli", binding.etKodePembeliTambah.text.toString().trim())
+            .whereEqualTo("nama_pembeli", binding.etNamaPembeliTambah.text.toString().trim())
         cekKode.get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    var kode = "kodekosong"
+                    var kode = "kosong"
                     for (document in task.result) {
-                        kode = "adakode"
+                        kode = "ada"
                     }
                     myCallback.onCallback(kode)
                 }

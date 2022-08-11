@@ -34,11 +34,8 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
     private var hargaBeli = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     private var hargaJual = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     private var jlhBrg = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-    private var kodeBrg = arrayOf("", "", "", "", "", "", "", "", "", "")
     private var namaBrg = arrayOf("", "", "", "", "", "", "", "", "", "")
     private var satuanBrg = arrayOf("", "", "", "", "", "", "", "", "", "")
-    private var metodeBayarList = arrayOf("lunas", "hutang")
-    private var metodeBayar: String = "lunas"
     private var totalHarga: Int = 0
     private lateinit var binding: ActivityPembelianBeliBarangBinding
     private lateinit var adapter: ProductFirestoreRecyclerAdapter
@@ -69,35 +66,7 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.btnPembelianBeliBarang.setOnClickListener(this)
         binding.btnBatalPembelianBeliBarang.setOnClickListener(this)
-        //showSpinner()
     }
-
-    /*private fun showSpinner() {
-        val spinner = binding.spinnerBeliBarang
-        val adapter = applicationContext?.let {
-            ArrayAdapter(
-                it,
-                android.R.layout.simple_spinner_dropdown_item, metodeBayarList
-            )
-        }
-        spinner.adapter = adapter
-
-        spinner.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                metodeBayar = metodeBayarList[position]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-
-            }
-        }
-    }*/
 
     private inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
@@ -110,7 +79,7 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
         ) {
             holder.setIsRecyclable(false)
             val tvNamaBarang: TextView = holder.itemView.findViewById(R.id.tv_nama_barang_transaksi)
-            val tvKodeBarang: TextView =
+            val tvHargaBarang: TextView =
                 holder.itemView.findViewById(R.id.tv_harga_barang_transaksi)
             val tvJlhBarang: TextView =
                 holder.itemView.findViewById(R.id.tv_jumlah_barang_transaksi)
@@ -119,7 +88,7 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
 
             tvNamaBarang.text = model.nama_barang
             supplierId = model.supplier_id
-            tvKodeBarang.text =
+            tvHargaBarang.text =
                 "HB: " + hargaBeli[position].toString() + " HJ:" + hargaJual[position].toString()
             tvJlhBarang.text = "Jumlah: " + jlhBrg[position].toString() + " " + satuanBrg[position]
 
@@ -165,7 +134,6 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
                                     hargaJual[position] = editTextJual.text.toString().toInt()
                                     jlhBrg[position] = editTextJlh.text.toString().toInt()
                                     satuanBrg[position] = editTextSatuan.text.toString()
-                                    kodeBrg[position] = model.kode_barang
                                     namaBrg[position] = model.nama_barang
                                     notifyDataSetChanged()
                                     builder.dismiss()
@@ -226,9 +194,9 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
     private fun cekData() {
         readData(object : MyCallback {
             override fun onCallback(value: String, position: Int) {
-                if (value == "adakode") {
+                if (value == "ada") {
                     updateData(position)
-                } else if (value == "kodekosong") {
+                } else if (value == "kosong") {
                     createData(position)
                 }
             }
@@ -239,18 +207,16 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
         for (i in namaBrg.indices) {
             Log.d("Tag", "i = $i")
             Log.d("Tag", "masuk while")
-            val cekKode = db.collection("barang").whereEqualTo("kode_barang", kodeBrg[i])
-            cekKode.get()
+            val cekBrg = db.collection("barang").whereEqualTo("nama_barang", namaBrg[i])
+            cekBrg.get()
                 .addOnCompleteListener { task ->
                     Log.d("Tag", "query sudah siap")
                     if (task.isSuccessful) {
-                        var kode = "kodekosong"
+                        var data = "kosong"
                         for (document in task.result) {
-                            kode = "adakode"
-                            Log.d("Tag", "posisi ini i = $i dgn kode ${kodeBrg[i]} ada kodenya")
+                            data = "ada"
                         }
-                        myCallback.onCallback(kode, i)
-                        Log.d("Tag", "posisi i = $i dgn kode ${kodeBrg[i]}")
+                        myCallback.onCallback(data, i)
                     }
                 }
         }
@@ -261,7 +227,6 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
         val ts = Timestamp(t.seconds, 0)
 
         val dataInvoice = hashMapOf(
-            "pembayaran" to metodeBayar,
             "supplier_id" to supplierId,
             "tanggal_invoice" to ts,
             "total_pembelian" to totalHarga,
@@ -284,7 +249,6 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
             "harga_jual" to hargaJual[i],
             "id" to id,
             "jumlah_barang" to jlhBrg[i],
-            "kode_barang" to kodeBrg[i],
             "nama_barang" to namaBrg[i],
             "nama_supplier" to dataNama,
             "satuan_barang" to satuanBrg[i],
@@ -324,7 +288,7 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun updateData(i: Int) {
         db.collection("barang")
-            .whereEqualTo("kode_barang", kodeBrg[i])
+            .whereEqualTo("nama_barang", namaBrg[i])
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
@@ -410,15 +374,6 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
             satuanBrg = arrList.toTypedArray()
             k--
         }
-
-        k = kodeBrg.size - 1
-        while (k > dataItem.size - 1) {
-            val arrList = kodeBrg.toMutableList()
-            arrList.removeAt(k)
-            kodeBrg = arrList.toTypedArray()
-            k--
-        }
-
 
         var z = 0
         while (z < namaBrg.size) {

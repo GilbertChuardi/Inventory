@@ -9,7 +9,7 @@
     <item
         android:id="@+id/navigation_pembelian"
         android:icon="@drawable/ic_pembelian"
-        android:title="Pembelian" />
+        android:title="Tambah" />
 
     <item
         android:id="@+id/navigation_transaksi"
@@ -24,6 +24,6 @@
     <item
         android:id="@+id/navigation_admin"
         android:icon="@drawable/ic_admin"
-        android:title="Admin" />
+        android:title="Akun" />
 
 </menu>

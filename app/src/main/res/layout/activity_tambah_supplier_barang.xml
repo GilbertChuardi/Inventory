@@ -50,24 +50,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_marginBottom="16dp"
-        app:errorEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_kode_supplier_barang_tambah"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Kode Barang"
-            android:importantForAutofill="no"
-            android:inputType="textCapCharacters"
-            android:maxLength="25" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
     <Button
         android:id="@+id/btn_simpan_supplier_barang_tambah"
         android:layout_width="wrap_content"

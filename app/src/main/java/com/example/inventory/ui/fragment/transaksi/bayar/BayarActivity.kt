@@ -59,7 +59,7 @@ class BayarActivity : AppCompatActivity(), View.OnClickListener {
         binding.recyclerViewBayar.layoutManager = LinearLayoutManager(applicationContext)
         val db = FirebaseFirestore.getInstance()
         val query = db.collection("barang").whereIn("id", dataItem)
-            .orderBy("kode_barang", Query.Direction.ASCENDING)
+            .orderBy("nama_barang", Query.Direction.ASCENDING)
         val options =
             FirestoreRecyclerOptions.Builder<BarangModel>().setQuery(query, BarangModel::class.java)
                 .build()

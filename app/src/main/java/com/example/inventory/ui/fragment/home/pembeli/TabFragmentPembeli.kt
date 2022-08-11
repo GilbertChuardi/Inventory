@@ -38,7 +38,7 @@ class TabFragmentPembeli : Fragment(), View.OnClickListener {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         val db = FirebaseFirestore.getInstance()
-        val query = db.collection("customer").orderBy("kode_pembeli", Query.Direction.DESCENDING)
+        val query = db.collection("customer").orderBy("tanggal_buat", Query.Direction.DESCENDING)
         val options = FirestoreRecyclerOptions.Builder<PembeliModel>()
             .setQuery(query, PembeliModel::class.java)
             .build()
@@ -62,7 +62,7 @@ class TabFragmentPembeli : Fragment(), View.OnClickListener {
             val tvJumlah: TextView = holder.itemView.findViewById(R.id.tv_jumlah_barang_riwayat)
             val cvItem: CardView = holder.itemView.findViewById(R.id.cv_item_riwayat)
             tvNamaPembeli.text = model.nama_pembeli
-            tvKode.text = model.kode_pembeli
+            tvKode.text = model.alamat_pembeli
             tvJumlah.text = ""
             cvItem.setOnClickListener(CustomOnItemClickListener(
                 position,
