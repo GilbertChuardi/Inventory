@@ -38,10 +38,7 @@ class PembelianPilihBarangActivity : AppCompatActivity(), View.OnClickListener {
         db = FirebaseFirestore.getInstance()
         binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
         val db = FirebaseFirestore.getInstance()
-        val query = db.collection("supplier_barang").whereIn("supplier_id", dataItem).orderBy(
-            "nama_barang",
-            Query.Direction.ASCENDING
-        )
+        val query = db.collection("supplier_barang").orderBy("nama_barang", Query.Direction.ASCENDING)
         val options =
             FirestoreRecyclerOptions.Builder<SupplierBarangModel>()
                 .setQuery(query, SupplierBarangModel::class.java)
@@ -122,7 +119,7 @@ class PembelianPilihBarangActivity : AppCompatActivity(), View.OnClickListener {
                             PembelianBeliBarangActivity.EXTRA_DATA,
                             adapter.checkedItem
                         )
-                        intent.putExtra(PembelianBeliBarangActivity.EXTRA_DATA_NAMA, dataItem[1])
+                        intent.putStringArrayListExtra(PembelianBeliBarangActivity.EXTRA_DATA_SUPPLIER, dataItem)
                         startActivity(intent)
                         overridePendingTransition(0, 0)
                     }

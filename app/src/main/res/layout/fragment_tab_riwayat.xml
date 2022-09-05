@@ -3,7 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.fragment.laporan.view.TabFragmentRiwayat">
+
+    <!--<ImageButton
+        android:id="@+id/img_btn_date"
+        android:layout_gravity="end"
+        android:layout_margin="8dp"
+        android:background="@drawable/ic_baseline_date_range_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

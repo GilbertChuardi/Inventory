@@ -29,11 +29,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
 
     private var dataItem = ArrayList<String>()
-    private var dataNama: String = ""
-    private var supplierId: String = ""
+    private var dataSupplier = ArrayList<String>()
     private var hargaBeli = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     private var hargaJual = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
     private var jlhBrg = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    private var arraykosong = arrayOf("")
     private var namaBrg = arrayOf("", "", "", "", "", "", "", "", "", "")
     private var satuanBrg = arrayOf("", "", "", "", "", "", "", "", "", "")
     private var totalHarga: Int = 0
@@ -48,7 +48,7 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
         supportActionBar?.hide()
         dataItem = intent.getStringArrayListExtra(EXTRA_DATA)!!
-        dataNama = intent.getStringExtra(EXTRA_DATA_NAMA)!!
+        dataSupplier = intent.getStringArrayListExtra(EXTRA_DATA_SUPPLIER)!!
 
         db = FirebaseFirestore.getInstance()
 
@@ -87,7 +87,6 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
             val imgBtnDelete: ImageButton = holder.itemView.findViewById(R.id.img_btn_delete)
 
             tvNamaBarang.text = model.nama_barang
-            supplierId = model.supplier_id
             tvHargaBarang.text =
                 "HB: " + hargaBeli[position].toString() + " HJ:" + hargaJual[position].toString()
             tvJlhBarang.text = "Jumlah: " + jlhBrg[position].toString() + " " + satuanBrg[position]
@@ -138,11 +137,20 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
                                     notifyDataSetChanged()
                                     builder.dismiss()
                                 } else {
-                                    Toast.makeText(
-                                        this@PembelianBeliBarangActivity,
-                                        "Data tidak valid",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    if(editTextJual.text.toString().toInt() <= editTextBeli.text.toString().toInt()){
+                                        Toast.makeText(
+                                            this@PembelianBeliBarangActivity,
+                                            "Jlh beli melebihi jlh jual",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                    else {
+                                        Toast.makeText(
+                                            this@PembelianBeliBarangActivity,
+                                            "Data tidak valid",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
                                 }
                             }
                         }
@@ -207,7 +215,7 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
         for (i in namaBrg.indices) {
             Log.d("Tag", "i = $i")
             Log.d("Tag", "masuk while")
-            val cekBrg = db.collection("barang").whereEqualTo("nama_barang", namaBrg[i])
+            val cekBrg = db.collection("barang").whereEqualTo("nama_barang", namaBrg[i]).whereEqualTo("supplier_id",dataSupplier[0])
             cekBrg.get()
                 .addOnCompleteListener { task ->
                     Log.d("Tag", "query sudah siap")
@@ -227,7 +235,7 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
         val ts = Timestamp(t.seconds, 0)
 
         val dataInvoice = hashMapOf(
-            "supplier_id" to supplierId,
+            "supplier_id" to dataSupplier[0],
             "tanggal_invoice" to ts,
             "total_pembelian" to totalHarga,
             "id" to "INV$randomString"
@@ -249,10 +257,11 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
             "harga_jual" to hargaJual[i],
             "id" to id,
             "jumlah_barang" to jlhBrg[i],
+            "keywords" to arraykosong.toList(),
             "nama_barang" to namaBrg[i],
-            "nama_supplier" to dataNama,
+            "nama_supplier" to dataSupplier[1],
             "satuan_barang" to satuanBrg[i],
-            "supplier_id" to supplierId
+            "supplier_id" to dataSupplier[0]
         )
 
         db.collection("barang")
@@ -271,8 +280,8 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
             "invoice_id" to "INV$randomString",
             "jumlah_barang" to jlhBrg[i],
             "nama_barang" to namaBrg[i],
-            "nama_supplier" to dataNama,
-            "supplier_id" to supplierId
+            "nama_supplier" to dataSupplier[1],
+            "supplier_id" to dataSupplier[0]
         )
 
         db.collection("detail_invoice_pembelian_barang")
@@ -288,13 +297,12 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun updateData(i: Int) {
         db.collection("barang")
-            .whereEqualTo("nama_barang", namaBrg[i])
+            .whereEqualTo("nama_barang", namaBrg[i]).whereEqualTo("supplier_id",dataSupplier[0])
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
 
                     val data = db.collection("barang").document(document.id)
-
                     data.update("jumlah_barang", FieldValue.increment(jlhBrg[i].toLong()))
 
                     val id = db.collection("detail_invoice_pembelian_barang").document().id
@@ -305,8 +313,8 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
                         "invoice_id" to "INV$randomString",
                         "jumlah_barang" to jlhBrg[i],
                         "nama_barang" to namaBrg[i],
-                        "nama_supplier" to dataNama,
-                        "supplier_id" to supplierId
+                        "nama_supplier" to dataSupplier[1],
+                        "supplier_id" to dataSupplier[0]
                     )
 
                     db.collection("detail_invoice_pembelian_barang")
@@ -408,6 +416,6 @@ class PembelianBeliBarangActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         const val EXTRA_DATA = "extra_data"
-        const val EXTRA_DATA_NAMA = "extra_data_nama"
+        const val EXTRA_DATA_SUPPLIER = "extra_data_supplier"
     }
 }

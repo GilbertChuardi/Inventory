@@ -1,7 +1,11 @@
 package com.example.inventory.ui.fragment.transaksi
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,6 +59,42 @@ class TransaksiFragment : Fragment(), View.OnClickListener {
 
         numberFormat1.maximumFractionDigits = 0
 
+        binding.searchView.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                return@OnKeyListener true
+            }
+            false
+        })
+
+        binding.searchView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val searchText = s.toString().trim()
+
+                val query1 = db.collection("barang").whereArrayContains(
+                    "keywords",
+                    searchText
+                ).limit(50)
+
+                val options1 = FirestoreRecyclerOptions.Builder<BarangModel>()
+                    .setQuery(query1,BarangModel::class.java)
+                    .build()
+                adapter.updateOptions(options1)
+
+                if(searchText == ""){
+                    adapter.updateOptions(options)
+                }
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
+
         binding.btnBayar.setOnClickListener(this)
     }
 
@@ -75,12 +115,18 @@ class TransaksiFragment : Fragment(), View.OnClickListener {
                 holder.itemView.findViewById(R.id.tv_jumlah_barang_transaksi)
             val checkBox: CheckBox = holder.itemView.findViewById(R.id.cb_transaksi)
 
-            tvNamaBarang.text = model.nama_barang
+            tvNamaBarang.text = model.nama_barang + "(${model.nama_supplier})"
 
             val convert = numberFormat1.format(model.harga_jual)
             tvHargaBarang.text = "Rp. " + convert.removeRange(0, 1)
             tvJumlahBarang.text =
                 "Stok: " + model.jumlah_barang.toString() + " " + model.satuan_barang
+
+            if(model.jumlah_barang == 0){
+                tvJumlahBarang.setTextColor(Color.RED)
+            }else{
+                tvJumlahBarang.setTextColor(Color.BLACK)
+            }
 
             if (checkedItem.size != 0) {
                 var i = 0

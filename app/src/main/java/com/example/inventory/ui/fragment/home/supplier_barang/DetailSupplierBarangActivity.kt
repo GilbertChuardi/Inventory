@@ -45,7 +45,6 @@ class DetailSupplierBarangActivity : AppCompatActivity(), View.OnClickListener {
                 .update(
                     mapOf(
                         "nama_barang" to binding.etNamaSupplierBarangDetail.text.toString(),
-                        "supplier_id" to dataItem.supplier_id,
                         "id" to dataItem.id
                     )
                 )

@@ -20,13 +20,25 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:hint="Cari"
+        app:layout_constraintTop_toBottomOf="@id/tv_transaksi"
+        android:background="@drawable/et_border"
+        android:layout_marginTop="4dp"
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:padding="8dp"
+        android:maxLines="1"
+        android:inputType="text"
+        android:layout_height="wrap_content"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_transaksi"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="2dp"
         app:layout_constraintBottom_toTopOf="@id/btn_bayar"
-        app:layout_constraintTop_toBottomOf="@id/tv_transaksi"
+        app:layout_constraintTop_toBottomOf="@id/search_view"
         tools:listitem="@layout/item_data_transaksi" />
 
     <Button

@@ -12,6 +12,7 @@ class DaftarModel(
     val keterangan: String = "",
     val nama_pembeli: String = "",
     val tanggal_penjualan: Timestamp = tsdm,
+    val total_bayar:Int = 0,
     val total_harga: Int = 0,
     val total_profit: Int = 0,
     val transaksi_penjualan_id: String = ""

@@ -196,10 +196,6 @@ class PenyesuaianActivity : AppCompatActivity(), View.OnClickListener {
             data.update("jumlah_barang", FieldValue.increment(beda.toLong()))
         }
 
-        /*if (metodeBayar == "hutang") {
-            db.collection("invoice_pembelian_barang").document(invoiceId)
-                .update("pembayaran", "hutang")
-        }*/
         Toast.makeText(this, "Barang Updated", Toast.LENGTH_SHORT).show()
         startActivity(Intent(this, MainActivity::class.java))
         finish()

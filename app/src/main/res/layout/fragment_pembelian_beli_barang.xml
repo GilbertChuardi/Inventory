@@ -6,32 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.pembelian.beli.PembelianBeliBarangFragment">
 
+    <EditText
+        android:hint="Cari"
+        android:background="@drawable/et_border"
+        android:layout_marginTop="4dp"
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="8dp"
+        android:maxLines="1"
+        android:inputType="text"
+        android:layout_height="wrap_content"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="52dp"
         android:layout_marginBottom="95dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_data_riwayat" />
+        app:layout_constraintTop_toBottomOf="@id/search_view"
+        tools:listitem="@layout/item_data_pembelian" />
 
-    <LinearLayout
+    <Button
+        android:id="@+id/btn_pembelian_beli_barang"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/recycler_view">
-
-        <Button
-            android:id="@+id/btn_pembelian_beli_barang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1"
-            android:text="Tambah barang"
-            android:textAllCaps="false" />
-    </LinearLayout>
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="-60dp"
+        android:layout_marginEnd="8dp"
+        android:text="Tambah barang"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/recycler_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

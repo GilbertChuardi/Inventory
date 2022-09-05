@@ -300,6 +300,7 @@ class BayarActivity : AppCompatActivity(), View.OnClickListener {
             "keterangan" to keterangan,
             "nama_pembeli" to namaPembeli,
             "tanggal_penjualan" to ts,
+            "total_bayar" to 0,
             "total_harga" to totalHarga,
             "total_profit" to totalProfit,
             "transaksi_penjualan_id" to "PEN$randomString"

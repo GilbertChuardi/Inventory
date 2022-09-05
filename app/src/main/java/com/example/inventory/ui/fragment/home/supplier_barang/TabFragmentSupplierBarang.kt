@@ -16,6 +16,7 @@ import com.example.inventory.CustomOnItemClickListener
 import com.example.inventory.R
 import com.example.inventory.databinding.FragmentTabSupplierBarangBinding
 import com.example.inventory.model.SupplierBarangModel
+import com.example.inventory.ui.fragment.MainActivity
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,9 +27,6 @@ class TabFragmentSupplierBarang : Fragment(), View.OnClickListener {
     private var _binding: FragmentTabSupplierBarangBinding? = null
     private val binding get() = _binding!!
     private var adapter: ProductFirestoreRecyclerAdapter? = null
-    private val dataId = ArrayList<String>()
-    private val dataNama = ArrayList<String>()
-    var posisi: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,62 +41,14 @@ class TabFragmentSupplierBarang : Fragment(), View.OnClickListener {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         val db = FirebaseFirestore.getInstance()
-        val query = db.collection("supplier_barang")
+        val query = db.collection("supplier_barang").orderBy("nama_barang", Query.Direction.ASCENDING)
         val options = FirestoreRecyclerOptions.Builder<SupplierBarangModel>()
             .setQuery(query, SupplierBarangModel::class.java)
             .build()
         adapter = ProductFirestoreRecyclerAdapter(options)
         binding.recyclerView.adapter = adapter
 
-        db.collection("supplier")
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    dataId.add(document["id"].toString())
-                    dataNama.add(document["nama_supplier"].toString())
-                    showSpinner(dataId, dataNama)
-                }
-            }
-
         binding.btnTambahSupplierBarang.setOnClickListener(this)
-    }
-
-    private fun showSpinner(dataId: ArrayList<String>, dataNama: ArrayList<String>) {
-        val spinner = binding.spinner
-        val adapter = context?.let {
-            ArrayAdapter(
-                it,
-                android.R.layout.simple_spinner_dropdown_item, dataNama
-            )
-        }
-        spinner.adapter = adapter
-
-        spinner.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                updateView(dataId[position])
-                posisi = position
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-
-            }
-        }
-    }
-
-    private fun updateView(dataId: String) {
-        val db = FirebaseFirestore.getInstance()
-        val query = db.collection("supplier_barang").whereEqualTo("supplier_id", dataId)
-            .orderBy("nama_barang", Query.Direction.ASCENDING)
-        val options = FirestoreRecyclerOptions.Builder<SupplierBarangModel>()
-            .setQuery(query, SupplierBarangModel::class.java)
-            .build()
-        adapter!!.updateOptions(options)
     }
 
     private inner class ProductViewHolder(view: View) : RecyclerView.ViewHolder(view)
@@ -140,9 +90,7 @@ class TabFragmentSupplierBarang : Fragment(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.btn_tambah_supplier_barang -> {
-                val intent = Intent(activity, TambahSupplierBarangActivity::class.java)
-                intent.putExtra(TambahSupplierBarangActivity.EXTRA_DATA, dataId[posisi])
-                activity?.startActivity(intent)
+                startActivity(Intent(context, TambahSupplierBarangActivity::class.java))
             }
         }
     }

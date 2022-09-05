@@ -11,7 +11,7 @@
         android:id="@+id/tv_pembelian_pilih"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Beli Barang"
+        android:text="Tambah Barang"
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,21 +28,24 @@
         app:layout_constraintTop_toBottomOf="@id/tv_pembelian_pilih">
 
         <TextView
+            android:textSize="12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="PILIH SUPPLIER"
             android:textColor="@color/biru_muda" />
 
         <TextView
+            android:textSize="12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" > PILIH BARANG"
             android:textColor="@color/biru_muda" />
 
         <TextView
+            android:textSize="12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" > BELI BARANG"
+            android:text=" > TAMBAH BARANG"
             android:textColor="@color/biru_muda" />
 
     </LinearLayout>
@@ -57,33 +60,13 @@
         app:layout_constraintTop_toBottomOf="@id/ll_tv_navigasi"
         tools:listitem="@layout/item_data_beli_barang" />
 
-    <!--<TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="24dp"
-        android:text="Metode Bayar : "
-        app:layout_constraintBottom_toTopOf="@id/btn_pembelian_beli_barang"
-        app:layout_constraintEnd_toStartOf="@id/spinner_beli_barang"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinner_beli_barang"
-        android:layout_width="150dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_pembelian_beli_barang"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />-->
-
     <Button
         android:id="@+id/btn_pembelian_beli_barang"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Beli Barang"
+        android:text="Tambah Barang"
         android:textAllCaps="false"
         app:layout_constraintBottom_toTopOf="@id/btn_batal_pembelian_beli_barang" />
 
@@ -94,7 +77,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="#FF3B30"
-        android:text="Batal Beli Barang"
+        android:text="Batal Tambah Barang"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

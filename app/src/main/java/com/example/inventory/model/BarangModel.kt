@@ -12,6 +12,7 @@ class BarangModel(
     val nama_barang: String = "",
     val nama_supplier: String = "",
     val satuan_barang: String = "",
+    val keywords:  List<String> = arrayOf("0").toList(),
     val supplier_id: String = ""
 ) : Parcelable {
     var isSelected: Boolean = false

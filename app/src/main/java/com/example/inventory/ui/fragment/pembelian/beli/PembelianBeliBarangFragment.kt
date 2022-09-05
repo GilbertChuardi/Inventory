@@ -2,7 +2,12 @@ package com.example.inventory.ui.fragment.pembelian.beli
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,11 +22,13 @@ import com.example.inventory.CustomOnItemClickListener
 import com.example.inventory.R
 import com.example.inventory.databinding.FragmentPembelianBeliBarangBinding
 import com.example.inventory.model.BarangModel
+import com.example.inventory.model.SupplierBarangModel
 import com.example.inventory.ui.fragment.pembelian.beli.barang.PembelianPilihSupplierActivity
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import java.util.*
 
 class PembelianBeliBarangFragment : Fragment(), View.OnClickListener {
 
@@ -50,6 +57,42 @@ class PembelianBeliBarangFragment : Fragment(), View.OnClickListener {
         adapter = ProductFirestoreRecyclerAdapter(options)
         binding.recyclerView.adapter = adapter
 
+        binding.searchView.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                return@OnKeyListener true
+            }
+            false
+        })
+
+        binding.searchView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val searchText = s.toString().trim()
+
+                val query1 = db.collection("barang").whereArrayContains(
+                    "keywords",
+                    searchText
+                ).limit(50)
+
+                val options1 = FirestoreRecyclerOptions.Builder<BarangModel>()
+                    .setQuery(query1,BarangModel::class.java)
+                    .build()
+                adapter!!.updateOptions(options1)
+
+                if(searchText == ""){
+                    adapter!!.updateOptions(options)
+                }
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
+
         binding.btnPembelianBeliBarang.setOnClickListener(this)
     }
 
@@ -67,9 +110,32 @@ class PembelianBeliBarangFragment : Fragment(), View.OnClickListener {
             val tvKode: TextView = holder.itemView.findViewById(R.id.tv_harga_barang_transaksi)
             val tvJumlah: TextView = holder.itemView.findViewById(R.id.tv_jumlah_barang_transaksi)
             val cvItem: CardView = holder.itemView.findViewById(R.id.cv_item_transaksi)
-            tvNamaPembeli.text = model.nama_barang
+            tvNamaPembeli.text = model.nama_barang + " (${model.nama_supplier})"
             tvKode.text = "HB: " + model.harga_beli + " HJ: " + model.harga_jual
             tvJumlah.text = "Stok : " + model.jumlah_barang.toString() + " " + model.satuan_barang
+
+            if(model.jumlah_barang == 0){
+                tvJumlah.setTextColor(Color.RED)
+            }else{
+                tvJumlah.setTextColor(Color.BLACK)
+            }
+
+            if(model.keywords[0] == ""){
+                val keywords = mutableListOf<String>()
+                for (i in 0 until model.nama_barang.length) {
+                    for (j in (i+1)..model.nama_barang.length) {
+                        keywords.add(model.nama_barang.slice(i until j))
+                    }
+                }
+                db.collection("barang")
+                    .document(model.id)
+                    .update(
+                        mapOf(
+                            "keywords" to keywords
+                        )
+                    )
+            }
+
             cvItem.setOnClickListener(CustomOnItemClickListener(
                 position,
                 object : CustomOnItemClickListener.OnItemClickCallback {

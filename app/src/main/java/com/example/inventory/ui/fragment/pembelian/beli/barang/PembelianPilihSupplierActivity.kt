@@ -88,7 +88,6 @@ class PembelianPilihSupplierActivity : AppCompatActivity(), View.OnClickListener
                         checkedItem.removeAll(checkedItem)
                         checkedItem.add(model.id)
                         checkedItem.add(model.nama_supplier)
-
                     }
                 }
             ))

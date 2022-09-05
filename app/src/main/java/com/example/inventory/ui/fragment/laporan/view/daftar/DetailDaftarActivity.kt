@@ -10,6 +10,7 @@ import com.example.inventory.R
 import com.example.inventory.databinding.ActivityDetailDaftarBinding
 import com.example.inventory.model.DaftarModel
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.NumberFormat
 
@@ -31,6 +32,8 @@ class DetailDaftarActivity : AppCompatActivity(), View.OnClickListener {
 
         numberFormat1.maximumFractionDigits = 0
         val convert = numberFormat1.format(dataItem.total_harga)
+        val convert1 = numberFormat1.format(dataItem.total_bayar)
+        val convert2 = numberFormat1.format(dataItem.total_harga-dataItem.total_bayar)
 
         db.collection("transaksip_penjualan").whereEqualTo("id", dataItem.transaksi_penjualan_id)
             .get()
@@ -51,7 +54,7 @@ class DetailDaftarActivity : AppCompatActivity(), View.OnClickListener {
                 binding.tvDataDaftar.text = sb.toString()
                 binding.tvTanggalDaftar.text =
                     dataItem.tanggal_penjualan.toDate().toLocaleString().toString()
-                binding.tvTotalHargaDaftar.text = "Rp. " + convert.removeRange(0, 1)
+                binding.tvTotalHargaDaftar.text = "Rp. " + convert.removeRange(0, 1) + "\nTotal yang sudah dibayar: Rp. " +convert1.removeRange(0,1) + "\nTotal belum dibayar: Rp. " + convert2.removeRange(0,1)
                 binding.etKeteranganDaftar.setText(dataItem.keterangan)
             }
 
@@ -69,11 +72,19 @@ class DetailDaftarActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun updateItem() {
-        db.collection("transaksip").document(dataItem.id)
-            .update("keterangan", binding.etKeteranganDaftar.text.toString())
-            .addOnSuccessListener {
-                Toast.makeText(this, "Data sudah terupdate", Toast.LENGTH_SHORT).show()
-            }
+        if(binding.etTotalBayarDaftar.text.toString().isNotEmpty()) {
+            db.collection("transaksip").document(dataItem.id)
+                .update(
+                    mapOf(
+                        "keterangan" to binding.etKeteranganDaftar.text.toString(),
+                        "total_bayar" to FieldValue.increment(binding.etTotalBayarDaftar.text.toString().toLong())
+                    )
+                )
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Data sudah terupdate", Toast.LENGTH_SHORT).show()
+                }
+            finish()
+        }
     }
 
     private fun alertDialogDelete() {

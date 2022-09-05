@@ -1,7 +1,13 @@
 package com.example.inventory.ui.masuk
 
+import android.app.AlarmManager.RTC_WAKEUP
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -9,8 +15,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.inventory.R
 import com.example.inventory.databinding.ActivityMasukBinding
 import com.example.inventory.ui.fragment.MainActivity
+import com.example.inventory.util.AlarmManager
 import com.example.inventory.util.TypeFaceUtil
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
 
 class Masuk : AppCompatActivity(), View.OnClickListener {
 
@@ -46,7 +54,48 @@ class Masuk : AppCompatActivity(), View.OnClickListener {
             }
             false
         })
+        //setAlarm1()
+        //createNotificationChannel()
     }
+
+    /*private fun setAlarm1() {
+        var calender: Calendar
+        calender = Calendar.getInstance()
+        calender.set(Calendar.HOUR_OF_DAY, 9)
+        calender.set(Calendar.MINUTE, 0)
+        calender.set(Calendar.SECOND, 0)
+        val alarmManager:AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val thuReq: Long = Calendar.getInstance().timeInMillis + 1
+        var reqReqCode = thuReq.toInt()
+        if (calender.timeInMillis < System.currentTimeMillis()) {
+            calender.add(Calendar.DAY_OF_YEAR, 1)
+        }
+        val alarmTimeMilsec = calender.timeInMillis
+        val intent = Intent(this, AlarmManager::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+        val pendingIntent = PendingIntent.getBroadcast(this, reqReqCode, intent, 0)
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calender.timeInMillis,
+            9 * 60 * 60 * 1000,
+            pendingIntent
+        )
+    }
+
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Alarmclock Channel"
+            val description = " Reminder Alarm manager"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val notificationChannel = NotificationChannel(CHANNELID, name, importance)
+            notificationChannel.description = description
+            val notificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+    }*/
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -57,14 +106,16 @@ class Masuk : AppCompatActivity(), View.OnClickListener {
     private fun login() {
         binding.tvSalah.visibility = View.INVISIBLE
         when {
-            binding.etPassword.text.toString().isEmpty() -> {
-                binding.tvSalah.text = "Password tidak ada!"
-                binding.tvSalah.visibility = View.VISIBLE
-            }
             binding.etUsername.text.toString().isEmpty() -> {
                 binding.tvSalah.text = "Username tidak ada!"
                 binding.tvSalah.visibility = View.VISIBLE
             }
+
+            binding.etPassword.text.toString().isEmpty() -> {
+                binding.tvSalah.text = "Password tidak ada!"
+                binding.tvSalah.visibility = View.VISIBLE
+            }
+
             binding.etPassword.text.toString().isNotEmpty() -> {
                 binding.pbLoading.visibility = View.VISIBLE
                 val pass = db.collection("admin").document("admin")

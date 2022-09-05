@@ -28,21 +28,24 @@
         app:layout_constraintTop_toBottomOf="@id/tv_pembelian_pilih">
 
         <TextView
+            android:textSize="12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="PILIH SUPPLIER"
             android:textColor="@color/biru_muda" />
 
         <TextView
+            android:textSize="12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=" > PILIH BARANG"
             android:textColor="@color/biru_muda" />
 
         <TextView
+            android:textSize="12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" > BELI BARANG" />
+            android:text=" > TAMBAH BARANG" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -61,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Lanjut ke Beli Barang"
+        android:text="Lanjut ke Tambah Barang"
         android:textAllCaps="false"
         app:layout_constraintBottom_toTopOf="@id/btn_batal_pembelian_pilih_beli_barang" />
 
@@ -72,7 +75,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="#FF3B30"
-        android:text="Batal Beli Barang"
+        android:text="Batal Tambah Barang"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
